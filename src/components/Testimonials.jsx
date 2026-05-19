@@ -257,6 +257,7 @@ const styles = {
     width: '1px',
     height: '48px',
     background: '#DDD6FE',
+    flexShrink: 0,
   },
   averageNumber: {
     fontFamily: "'Fredoka', sans-serif",
