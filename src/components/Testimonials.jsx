@@ -105,12 +105,12 @@ export default function Testimonials() {
               <Star key={i} size={28} fill="#F59E0B" color="#F59E0B" />
             ))}
           </div>
-          <div style={styles.averageDivider} />
+<div style={styles.averageDivider} className="testimonials-divider" />
           <div>
             <div style={styles.averageNumber}>4.9</div>
             <div style={styles.averageSub}>de 5.0 — baseado em 200+ avaliações</div>
           </div>
-          <div style={styles.averageDivider} />
+          <div style={styles.averageDivider} className="testimonials-divider" />
           <div>
             <div style={styles.averagePercent}>98% de satisfação</div>
             <div style={styles.averageSub}>entre todos os tutores atendidos</div>
@@ -118,23 +118,21 @@ export default function Testimonials() {
         </div>
 
      <style>{`
-          @media (max-width: 768px) {
-            .testimonials-grid {
-              grid-template-columns: 1fr !important;
-            }
-            .testimonials-average {
-              flex-direction: column !important;
-              text-align: center !important;
-              gap: 16px !important;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .testimonials-average > div {
-              width: 100% !important;
-            }
-          }
-        `}</style>
+  @media (max-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .testimonials-average {
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: 16px !important;
+      padding: 24px 20px !important;
+    }
+    .testimonials-divider {
+      display: none !important;
+    }
+  }
+`}</style>
       </div>
     </section>
   )
