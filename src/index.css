@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&family=Dancing+Script:wght@700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+:root {
+  --primary:       #7C3AED;
+  --primary-light: #A78BFA;
+  --primary-dark:  #4C1D95;
+  --accent:        #EC4899;
+  --accent-light:  #F472B6;
+  --gold:          #F59E0B;
+  --gold-light:    #FCD34D;
+  --bg:            #FAF5FF;
+  --bg-card:       #F3E8FF;
+  --border:        #DDD6FE;
+  --text:          #4C1D95;
+  --text-muted:    #7C3AED;
+  --text-body:     #374151;
+  --success:       #059669;
+  --white:         #ffffff;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--primary-dark);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: 'Fredoka', sans-serif;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.3px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+.btn-outline:hover {
+  background: white;
+  color: var(--primary);
+}
+
+.btn-blue {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  color: var(--primary);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+.btn-blue:hover {
+  background: var(--border);
+}
+
+.tag-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F3E8FF, #DDD6FE);
+  color: #6D28D9;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 28px;
+  border: 1.5px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.12);
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.8); }
+}
+
+.section-white { background: var(--white); }
+.section-blue  { background: var(--bg); }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+.section-header h2 {
+  font-size: 40px;
+  font-weight: 600;
+}
+.section-header p {
+  color: var(--text-muted);
+  font-size: 16px;
+  max-width: 480px;
+  margin: 10px auto 0;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section-header h2 { font-size: 28px; }
+}
