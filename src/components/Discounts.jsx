@@ -13,7 +13,7 @@ const discounts = [
       'No pacote de 4 banhos para usar em até 4 meses. Economize e mantenha a higiene do pet sempre em dia.',
     featured: false,
     whatsapp:
-      'https://wa.me/5514998474542?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Banho.',
+      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Banho.',
   },
 
   {
@@ -24,7 +24,7 @@ const discounts = [
       'Pacote de 3 tosas para usar em até 6 meses. Seu pet sempre bonito e bem cuidado.',
     featured: true,
     whatsapp:
-      'https://wa.me/5514998474542?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Aparadinho.',
+      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Aparadinho.',
   },
 
   {
@@ -35,7 +35,7 @@ const discounts = [
       'Especial para filhotes de até 6 meses com atendimento delicado e cuidadoso.',
     featured: false,
     whatsapp:
-      'https://wa.me/5514998474542?text=Olá,%20gostaria%20de%20adquirir%20o%20Plano%20Mel%20Bebê.',
+      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20adquirir%20o%20Plano%20Mel%20Bebê.',
   },
 ]
 
