@@ -21,9 +21,9 @@ const info = [
     title: '(43) 99182-0171',
 desc: (
   <>
-    Seg–Sáb das 8h às 19h
+    Seg–Sex das 8h às 18h
     <br />
-    Dom das 8h às 12h
+    Sáb das 8h às 16h
   </>
 ),
     color: '#FCE7F3',

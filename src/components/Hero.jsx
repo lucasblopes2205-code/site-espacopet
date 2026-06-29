@@ -1,8 +1,5 @@
 import { Phone, Calendar, PawPrint } from 'lucide-react'
 
-const stats = [
-  { value: '4.9★', label: 'Avaliação média' },
-]
 
 export default function Hero() {
   return (
@@ -48,14 +45,6 @@ export default function Hero() {
             </a>
           </div>
 
-          <div style={styles.stats} className="hero-stats">
-            {stats.map((item) => (
-              <div key={item.label} style={styles.statCard}>
-                <span style={styles.statValue}>{item.value}</span>
-                <span style={styles.statLabel}>{item.label}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* RIGHT — Fachada */}
@@ -73,7 +62,7 @@ export default function Hero() {
             <div style={styles.badgeAberto}>
               <span style={styles.badgeDot} />
               <span style={styles.badgeAbertoText}>
-                Seg–Sáb 8h às 19h
+                Seg–Sex 8h às 18h | Sáb 8h às 16h
               </span>
             </div>
 

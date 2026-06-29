@@ -104,8 +104,8 @@ export default function Footer() {
   <Clock size={16} />
 
   <div>
-    <div>Seg à Sáb • 8h às 19h</div>
-    <div>Dom • 8h às 12h</div>
+    <div>Seg–Sex • 8h às 18h</div>
+    <div>Sáb • 8h às 16h</div>
   </div>
 </div>
 </div>
