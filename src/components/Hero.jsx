@@ -1,7 +1,6 @@
 import { Phone, Calendar, PawPrint } from 'lucide-react'
 
 const stats = [
-  { value: '200+', label: 'Pets atendidos' },
   { value: '4.9★', label: 'Avaliação média' },
 ]
 
@@ -78,11 +77,6 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* Badge avaliação */}
-            <div style={styles.badgeRating}>
-              <span style={styles.ratingStars}>★★★★★</span>
-              <span style={styles.ratingText}>4.9 · +200 avaliações</span>
-            </div>
 
             {/* Badge instagram */}
             <a
