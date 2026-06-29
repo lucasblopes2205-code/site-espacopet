@@ -6,27 +6,26 @@ import {
   Camera,
 } from 'lucide-react'
 
+const WA = 'https://wa.me/5543991820171?text='
+
 const footerLinks = {
   Serviços: [
-    'Banho',
-    'Tosa',
-    'Hidratação',
-    'Perfumes',
-    'Acessórios',
+    { label: 'Banho',       href: '#servicos' },
+    { label: 'Tosa',        href: '#servicos' },
+    { label: 'Hidratação',  href: '#servicos' },
+    { label: 'Perfumes',    href: '#servicos' },
+    { label: 'Acessórios',  href: '#servicos' },
   ],
 
   Empresa: [
-    'Sobre nós',
-    'Promoções',
-    'Blog',
-    'Trabalhe conosco',
+    { label: 'Sobre nós',   href: '#' },
+    { label: 'Promoções',   href: '#promocoes' },
   ],
 
   Suporte: [
-    'Agendamento',
-    'Cancelamentos',
-    'Dúvidas frequentes',
-    'Fale conosco',
+    { label: 'Agendamento',   href: WA + encodeURIComponent('Olá, gostaria de realizar um agendamento'), target: '_blank' },
+    { label: 'Cancelamentos', href: WA + encodeURIComponent('Olá, gostaria de realizar um cancelamento'), target: '_blank' },
+    { label: 'Fale conosco',  href: WA + encodeURIComponent('Olá, gostaria de falar com vocês'), target: '_blank' },
   ],
 }
 
@@ -126,11 +125,13 @@ export default function Footer() {
               <div style={styles.links}>
                 {items.map((item) => (
                   <a
-                    key={item}
-                    href="#"
+                    key={item.label}
+                    href={item.href}
+                    target={item.target || '_self'}
+                    rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                     style={styles.link}
                   >
-                    {item}
+                    {item.label}
                   </a>
                 ))}
               </div>
