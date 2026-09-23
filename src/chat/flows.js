@@ -5,8 +5,8 @@
 
 const RACAS = [
   'Shih-tzu', 'Lhasa Apso', 'Yorkshire', 'Maltês', 'Poodle', 'Spitz Alemão',
-  'Pinscher', 'Dachshund', 'Bulldog Francês', 'Pug', 'Golden Retriever', 'Labrador',
-  'Border Collie',
+  'Pinscher', 'Schnauzer', 'Chihuahua', 'Dachshund', 'Bulldog Francês', 'Pug',
+  'Husky Siberiano', 'Golden Retriever', 'Labrador', 'Border Collie',
 ]
 
 const PORTE = [

@@ -453,7 +453,7 @@ export default function ChatAssistant() {
           font-size: 13px;
         }
         .chat__options--grid .chat__option:hover { transform: none; }
-        .chat__options--grid .chat__option:last-child {
+        .chat__options--grid .chat__option:nth-last-child(-n+2) {
           grid-column: 1 / -1;
         }
         .chat__option:hover {
