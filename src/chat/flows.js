@@ -32,13 +32,13 @@ const withNext = (options, next) => options.map((o) => ({ ...o, next }))
 const agendamento = (a) => [
   'Olá! Vim pelo site e gostaria de agendar 🐾',
   '',
+  `• Pet: ${a.pet}`,
   `• Serviço: ${a.servico}`,
   a.raca ? `• Raça: ${a.raca}` : null,
   a.porte ? `• Porte: ${a.porte}` : null,
   a.cidade ? `• Cidade: ${a.cidade}` : null,
   a.periodo ? `• Preferência: ${a.periodo}` : null,
   '',
-  'Nome do pet: ',
   'Podem me confirmar horário e valor?',
 ].filter((l) => l !== null).join('\n')
 
@@ -49,24 +49,12 @@ export const FLOWS = {
     text: 'Olá! Eu sou a Mel, assistente do Espaço Pet da Mel. 🐾 Como posso te ajudar?',
     options: [
       { label: '🛁 Agendar banho', set: { tipo: 'agendamento', servico: 'Banho' }, next: 'raca' },
-      { label: '✂️ Agendar tosa', set: { tipo: 'agendamento' }, next: 'tosa' },
+      { label: '✂️ Agendar tosa', set: { tipo: 'agendamento', servico: 'Tosa' }, next: 'raca' },
       { label: '🎁 Planos e pacotes', set: { tipo: 'plano', servico: 'Planos e pacotes' }, next: 'raca' },
       { label: '📅 Remarcar ou cancelar', next: 'remarcar' },
       { label: '📍 Horários e endereço', next: 'info' },
       { label: '💜 Deixar um feedback', next: 'feedback' },
       { label: '💬 Falar com a equipe', next: 'equipe' },
-    ],
-  },
-
-  // ---------- Tosa ----------
-  tosa: {
-    text: 'Que tipo de tosa você procura?',
-    options: [
-      { label: 'Tosa higiênica',        set: { servico: 'Tosa higiênica' },        next: 'raca' },
-      { label: 'Tosa na tesoura',       set: { servico: 'Tosa na tesoura' },       next: 'raca' },
-      { label: 'Tosa padrão da raça',   set: { servico: 'Tosa no padrão da raça' }, next: 'raca' },
-      { label: 'Tosa bebê',             set: { servico: 'Tosa bebê' },             next: 'raca' },
-      { label: 'Ainda não sei',         set: { servico: 'Tosa (quero uma indicação)' }, next: 'raca' },
     ],
   },
 
@@ -77,8 +65,8 @@ export const FLOWS = {
       : 'Qual é a raça do seu pet?',
     layout: 'grid',
     options: [
-      // Nos planos o porte é sempre perguntado; no agendamento, só para SRD e Outra
-      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: (a) => (a.tipo === 'plano' ? 'porte' : 'cidade') })),
+      // O porte só é perguntado para SRD e Outra; nas raças da lista ele já é conhecido
+      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: (a) => (a.tipo === 'plano' ? 'planos_fim' : 'cidade') })),
       { label: 'SRD (sem raça definida)', set: { raca: 'SRD (sem raça definida)' }, next: 'porte' },
       { label: 'Outra', set: { raca: 'Outra' }, next: 'porte' },
     ],
@@ -96,23 +84,24 @@ export const FLOWS = {
     options: withNext(PERIODO, 'agendar'),
   },
   agendar: {
-    text: (a) => `Tudo certo! Preparei seu pedido de ${a.servico}. Toque no botão abaixo para enviar pelo WhatsApp. Nossa equipe confirma o horário e o valor com você. 💜`,
+    text: (a) => `Tudo certo! Preparei seu pedido de ${a.servico}. Só falta escrever o nome do seu pet abaixo e enviar pelo WhatsApp. Nossa equipe confirma o horário e o valor com você. 💜`,
     final: agendamento,
     summary: true,
+    askPetName: true,
   },
 
   // ---------- Planos ----------
   planos_fim: {
-    text: 'Perfeito! Nossa equipe te apresenta os planos e condições ideais para o seu pet pelo WhatsApp. 💜',
+    text: 'Perfeito! Escreva o nome do seu pet abaixo e nossa equipe te apresenta os planos ideais para ele(a) pelo WhatsApp. 💜',
     summary: true,
+    askPetName: true,
     final: (a) => [
       'Olá! Vim pelo site e gostaria de conhecer os planos e pacotes 🐾',
       '',
+      `• Pet: ${a.pet}`,
       `• Raça: ${a.raca}`,
-      `• Porte: ${a.porte}`,
-      '',
-      'Nome do pet: ',
-    ].join('\n'),
+      a.porte ? `• Porte: ${a.porte}` : null,
+    ].filter((l) => l !== null).join('\n'),
   },
 
   // ---------- Remarcar / cancelar ----------
@@ -125,11 +114,12 @@ export const FLOWS = {
   },
   remarcar_fim: {
     text: (a) => a.acao === 'cancelar'
-      ? 'Vou preparar a mensagem de cancelamento. No WhatsApp, é só completar o nome do pet e a data do agendamento.'
-      : 'Vou preparar a mensagem para remarcar. No WhatsApp, é só completar os dados e sugerir um novo dia.',
+      ? 'Vou preparar a mensagem de cancelamento. Me diga o nome do pet e, no WhatsApp, é só completar a data do agendamento.'
+      : 'Vou preparar a mensagem para remarcar. Me diga o nome do pet e, no WhatsApp, é só completar a data e sugerir um novo dia.',
+    askPetName: true,
     final: (a) => a.acao === 'cancelar'
-      ? 'Olá! Preciso cancelar um agendamento.\n\nNome do pet: \nData e horário agendados: '
-      : 'Olá! Gostaria de remarcar um agendamento.\n\nNome do pet: \nData e horário agendados: \nNova preferência de dia/horário: ',
+      ? `Olá! Preciso cancelar um agendamento.\n\nNome do pet: ${a.pet}\nData e horário agendados: `
+      : `Olá! Gostaria de remarcar um agendamento.\n\nNome do pet: ${a.pet}\nData e horário agendados: \nNova preferência de dia/horário: `,
   },
 
   // ---------- Informações ----------
@@ -145,7 +135,7 @@ export const FLOWS = {
     text: 'O que vamos agendar?',
     options: [
       { label: 'Banho', set: { tipo: 'agendamento', servico: 'Banho' }, next: 'raca' },
-      { label: 'Tosa',  set: { tipo: 'agendamento' }, next: 'tosa' },
+      { label: 'Tosa',  set: { tipo: 'agendamento', servico: 'Tosa' }, next: 'raca' },
     ],
   },
   busca: {

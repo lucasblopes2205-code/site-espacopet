@@ -26,16 +26,27 @@ export default function ChatAssistant() {
   const [state, setState] = useState(initialState)
   const [typing, setTyping] = useState(false)
   const [teaser, setTeaser] = useState(false)
+  const [petName, setPetName] = useState('')
   const bodyRef = useRef(null)
+  const petInputRef = useRef(null)
 
   const { node: nodeId, answers, log, history } = state
   const node = FLOWS[nodeId]
-  const finalMessage = node.final ? resolve(node.final, answers) : null
+  const pet = petName.trim()
+  const needsPetName = node.askPetName && !pet
+  const finalMessage = node.final ? resolve(node.final, { ...answers, pet }) : null
   const summary = node.summary ? Object.entries(SUMMARY_LABELS).filter(([k]) => answers[k]) : []
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' })
   }, [log, typing, open])
+
+  // Na tela final, já deixa o cursor na caixinha do nome do pet (no computador)
+  useEffect(() => {
+    if (node.askPetName && !typing && window.matchMedia('(min-width: 640px)').matches) {
+      petInputRef.current?.focus({ preventScroll: true })
+    }
+  }, [node, typing])
 
   // Convite discreto depois de alguns segundos, uma vez por sessão
   useEffect(() => {
@@ -172,16 +183,42 @@ export default function ChatAssistant() {
               </div>
             )}
 
+            {!typing && node.askPetName && (
+              <label className="chat__pet">
+                <span>
+                  <PawPrint size={13} /> Nome do pet
+                </span>
+                <input
+                  ref={petInputRef}
+                  value={petName}
+                  onChange={(e) => setPetName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && pet) window.open(whatsapp(finalMessage), '_blank', 'noopener,noreferrer')
+                  }}
+                  placeholder="Ex.: Thor"
+                  maxLength={40}
+                  autoComplete="off"
+                />
+              </label>
+            )}
+
             {!typing && finalMessage && (
-              <a
-                href={whatsapp(finalMessage)}
-                target="_blank"
-                rel="noreferrer"
-                className="btn btn--gold btn--block chat__wa"
-              >
-                <MessageCircle size={16} />
-                Enviar para o WhatsApp
-              </a>
+              needsPetName ? (
+                <button className="btn btn--gold btn--block chat__wa chat__wa--disabled" disabled>
+                  <MessageCircle size={16} />
+                  Digite o nome do pet
+                </button>
+              ) : (
+                <a
+                  href={whatsapp(finalMessage)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn--gold btn--block chat__wa"
+                >
+                  <MessageCircle size={16} />
+                  Enviar para o WhatsApp
+                </a>
+              )
             )}
           </div>
 
@@ -469,6 +506,53 @@ export default function ChatAssistant() {
           letter-spacing: 0.14em;
           animation: chatIn 0.25s ease, chatPulse 2.4s ease-in-out 0.3s infinite;
         }
+        .chat__wa--disabled {
+          opacity: 0.4;
+          cursor: default;
+          animation: none;
+          box-shadow: none;
+        }
+        .chat__wa--disabled:hover { transform: none; }
+
+        .chat__pet {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          animation: chatIn 0.25s ease;
+        }
+        .chat__pet span {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: var(--gold);
+        }
+        .chat__pet input {
+          width: 100%;
+          padding: 12px 16px;
+          border-radius: 14px;
+          border: 1px solid rgba(232, 194, 103, 0.45);
+          background: rgba(15, 5, 24, 0.6);
+          color: var(--text);
+          font-family: var(--elegant);
+          font-size: 18px;
+          font-weight: 600;
+          outline: none;
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .chat__pet input::placeholder {
+          color: var(--text-muted);
+          font-weight: 500;
+          opacity: 0.7;
+        }
+        .chat__pet input:focus {
+          border-color: var(--gold);
+          box-shadow: 0 0 0 3px rgba(232, 194, 103, 0.15);
+        }
+
         @keyframes chatPulse {
           0%, 100% { box-shadow: 0 10px 30px rgba(232, 194, 103, 0.25); }
           50% { box-shadow: 0 0 0 6px rgba(232, 194, 103, 0.12), 0 10px 30px rgba(232, 194, 103, 0.4); }
