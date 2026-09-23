@@ -7,7 +7,7 @@ import Services     from './components/Services'
 import HowItWorks   from './components/HowItWorks'
 import CTA          from './components/CTA'
 import Footer       from './components/Footer'
-import WhatsApp     from './components/WhatsApp'
+import ChatAssistant from './components/ChatAssistant'
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
         <CTA />
       </main>
       <Footer />
-      <WhatsApp />
+      <ChatAssistant />
     </>
   )
 }
