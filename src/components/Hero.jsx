@@ -61,10 +61,6 @@ export default function Hero() {
             <img src="/images/fachada.png" alt="Fachada do Espaço Pet da Mel" />
           </div>
 
-          <div className="pill hero__pill-top">
-            <span className="dot-live" />
-            Atendimento com hora marcada
-          </div>
 
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="pill hero__pill-bottom">
             <Camera size={14} strokeWidth={1.6} />
@@ -168,11 +164,6 @@ export default function Hero() {
           max-width: 440px;
           height: 560px;
         }
-        .hero__pill-top {
-          position: absolute;
-          top: 90px;
-          left: -18px;
-        }
         .hero__pill-bottom {
           position: absolute;
           bottom: 40px;
@@ -194,7 +185,6 @@ export default function Hero() {
           .hero__lead, .hero__meta { margin-left: auto; margin-right: auto; }
           .hero__buttons, .hero__meta { justify-content: center; }
           .hero__frame { height: 460px; max-width: 380px; }
-          .hero__pill-top { left: 0; top: 60px; }
           .hero__pill-bottom { right: 0; }
         }
         @media (max-width: 480px) {
@@ -203,7 +193,7 @@ export default function Hero() {
           .hero__meta strong { font-size: 15px; }
           .hero__meta span { font-size: 12px; }
           .hero__buttons .btn { width: 100%; }
-          .hero__pill-top, .hero__pill-bottom { font-size: 11px; }
+          .hero__pill-bottom { font-size: 11px; }
         }
       `}</style>
     </section>

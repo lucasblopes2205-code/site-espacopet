@@ -41,8 +41,8 @@ export default function CTA() {
         <div className="cta__head">
           <span className="eyebrow">Reserve seu horário</span>
           <h2>
-            Seu pet merece
-            <span className="script--gold">o melhor</span>
+            Seu pet
+            <span className="script--gold">é a nossa estrela</span>
           </h2>
           <Ornament />
           <p>
