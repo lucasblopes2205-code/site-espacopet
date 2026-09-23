@@ -1,4 +1,4 @@
-import { Phone, Camera, MapPin } from 'lucide-react'
+import { Phone, Camera } from 'lucide-react'
 import { Ornament } from './ui'
 import { PHONE, PHONE_LABEL, INSTAGRAM_URL, whatsapp } from '../contact'
 
@@ -48,13 +48,16 @@ export default function Hero() {
               <strong>Sábado</strong>
               <span>8h às 16h</span>
             </div>
-          </div>
-
-          <div className="hero__cities">
-            <MapPin size={15} strokeWidth={1.6} />
-            <span>Ribeirão Claro <em>PR</em></span>
-            <span className="hero__cities-sep">◆</span>
-            <span>Santa Cruz do Rio Pardo <em>SP</em></span>
+            <div className="hero__meta-sep" />
+            <div>
+              <strong>Ribeirão Claro</strong>
+              <span>Paraná</span>
+            </div>
+            <div className="hero__meta-sep" />
+            <div>
+              <strong>Santa Cruz do Rio Pardo</strong>
+              <span>São Paulo</span>
+            </div>
           </div>
         </div>
 
@@ -133,11 +136,11 @@ export default function Hero() {
         .hero__meta {
           display: flex;
           align-items: center;
-          gap: 26px;
+          gap: 22px;
           margin-top: 52px;
           padding-top: 28px;
           border-top: 1px solid rgba(232, 194, 103, 0.18);
-          max-width: 520px;
+          max-width: 640px;
         }
         .hero__meta strong {
           display: block;
@@ -145,8 +148,10 @@ export default function Hero() {
           font-size: 17px;
           font-weight: 600;
           color: var(--gold-light);
+          white-space: nowrap;
         }
         .hero__meta span {
+          white-space: nowrap;
           font-size: 13px;
           color: var(--text-muted);
           letter-spacing: 0.06em;
@@ -155,32 +160,6 @@ export default function Hero() {
           width: 1px;
           height: 36px;
           background: rgba(232, 194, 103, 0.3);
-        }
-        .hero__cities {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 8px 12px;
-          margin-top: 22px;
-          max-width: 520px;
-          font-family: var(--elegant);
-          font-size: 18px;
-          font-weight: 500;
-          color: var(--text);
-        }
-        .hero__cities svg { color: var(--gold); }
-        .hero__cities em {
-          font-family: var(--sans);
-          font-style: normal;
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.2em;
-          color: var(--gold);
-          margin-left: 4px;
-        }
-        .hero__cities-sep {
-          font-size: 8px;
-          color: var(--magenta);
         }
         .hero__visual {
           position: relative;
@@ -203,6 +182,15 @@ export default function Hero() {
           margin-top: 64px;
         }
 
+        @media (max-width: 1240px) {
+          .hero__meta {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: start;
+            gap: 20px 56px;
+          }
+          .hero__meta-sep { display: none; }
+        }
         @media (max-width: 960px) {
           .hero { padding: 120px 0 56px; }
           .hero__grid {
@@ -210,18 +198,16 @@ export default function Hero() {
             text-align: center;
             gap: 56px;
           }
-          .hero__lead, .hero__meta, .hero__cities { margin-left: auto; margin-right: auto; }
-          .hero__buttons, .hero__meta, .hero__cities { justify-content: center; }
+          .hero__lead, .hero__meta { margin-left: auto; margin-right: auto; }
+          .hero__buttons, .hero__meta { justify-content: center; }
           .hero__frame { height: 460px; max-width: 380px; }
           .hero__pill-bottom { right: 0; }
         }
         @media (max-width: 480px) {
           .hero__frame { height: 400px; }
-          .hero__meta { gap: 16px; }
+          .hero__meta { gap: 18px 28px; }
           .hero__meta strong { font-size: 15px; }
           .hero__meta span { font-size: 12px; }
-          .hero__cities { font-size: 16px; flex-direction: column; gap: 4px; }
-          .hero__cities-sep { display: none; }
           .hero__buttons .btn { width: 100%; }
           .hero__pill-bottom { font-size: 11px; }
         }
