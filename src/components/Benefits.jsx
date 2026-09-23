@@ -16,7 +16,7 @@ export default function Benefits() {
       <div className="container benefits">
         <div className="benefits__visual">
           <div className="benefits__frame">
-            <img src="/images/spitz-consultorio.jpg" alt="Lulu da Pomerânia sobre a mesa de um consultório veterinário" />
+            <img src="/images/spitz-consultorio.jpg" alt="Lulu da Pomerânia sentado sobre a mesa de um consultório, ao lado de um estetoscópio dourado" />
           </div>
 
           <div className="benefits__badge">
@@ -69,7 +69,7 @@ export default function Benefits() {
           position: relative;
           border-radius: var(--radius);
           overflow: hidden;
-          height: 520px;
+          height: 600px;
           border: 1.5px solid rgba(240, 64, 158, 0.6);
           box-shadow: 0 0 40px rgba(240, 64, 158, 0.25), 0 30px 80px rgba(0, 0, 0, 0.55);
         }
@@ -79,7 +79,7 @@ export default function Benefits() {
           inset: 0;
           background: linear-gradient(180deg, transparent 55%, rgba(15, 5, 24, 0.7));
         }
-        .benefits__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+        .benefits__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
         .benefits__badge {
           position: absolute;
           left: 50%;
@@ -123,7 +123,7 @@ export default function Benefits() {
 
         @media (max-width: 860px) {
           .benefits { grid-template-columns: 1fr; gap: 72px; }
-          .benefits__frame { height: 380px; }
+          .benefits__frame { height: auto; aspect-ratio: 4 / 5; max-width: 480px; margin: 0 auto; }
           .benefits__text { text-align: center; }
           .benefits__text .paw-list { text-align: left; max-width: 480px; margin: 0 auto; }
         }
