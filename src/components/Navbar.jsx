@@ -7,7 +7,6 @@ const LINKS = [
   { label: 'O Espaço', href: '#espaco'   },
   { label: 'Ritual',   href: '#ritual'   },
   { label: 'Serviços', href: '#servicos' },
-  { label: 'Planos',   href: '#planos'   },
   { label: 'Contato',  href: '#contato'  },
 ]
 

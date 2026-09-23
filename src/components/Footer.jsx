@@ -7,7 +7,6 @@ const footerLinks = {
     { label: 'Banho Clássico',  href: '#servicos' },
     { label: 'Banho Signature', href: '#servicos' },
     { label: 'Spa Day',         href: '#servicos' },
-    { label: 'Planos',          href: '#planos' },
   ],
   Atendimento: [
     { label: 'Agendamento',   href: whatsapp('Olá, gostaria de realizar um agendamento'), external: true },
