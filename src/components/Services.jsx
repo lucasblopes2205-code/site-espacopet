@@ -12,7 +12,7 @@ const services = [
       'Banho com condicionador hidratante',
       'Corte de unhas',
       'Perfume pet',
-      'Bandana comum',
+      'Acessório comum',
       'Cromoterapia',
     ],
   },
