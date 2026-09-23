@@ -1,5 +1,5 @@
 // Menu do assistente do site. Cada tela tem um texto e opções.
-// Uma opção leva a outra tela (`next`) e pode guardar uma resposta (`set`).
+// As opções podem depender das respostas. Uma opção leva a outra tela (`next`) e pode guardar uma resposta (`set`).
 // A tela final (`final`) monta a mensagem que será enviada para o WhatsApp.
 // `next` também pode ser uma função das respostas, para caminhos que compartilham telas.
 
@@ -7,6 +7,12 @@ const RACAS = [
   'Shih-tzu', 'Lhasa Apso', 'Yorkshire', 'Maltês', 'Poodle', 'Spitz Alemão',
   'Pinscher', 'Schnauzer', 'Chihuahua', 'Dachshund', 'Bulldog Francês', 'Pug',
   'Husky Siberiano', 'Golden Retriever', 'Labrador', 'Border Collie',
+]
+
+// Raças que não aparecem na lista da tosa (continuam disponíveis via "Outra")
+const SEM_TOSA = [
+  'Pinscher', 'Bulldog Francês', 'Husky Siberiano', 'Pug', 'Border Collie',
+  'Labrador', 'Chihuahua', 'Dachshund',
 ]
 
 const PORTE = [
@@ -64,9 +70,11 @@ export const FLOWS = {
       ? 'Temos condições especiais para quem cuida do pet com frequência. Para indicarmos o melhor plano, qual é a raça do seu pet?'
       : 'Qual é a raça do seu pet?',
     layout: 'grid',
-    options: [
+    options: (a) => [
       // O porte só é perguntado para SRD e Outra; nas raças da lista ele já é conhecido
-      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: (a) => (a.tipo === 'plano' ? 'planos_fim' : 'cidade') })),
+      ...RACAS
+        .filter((r) => a.servico !== 'Tosa' || !SEM_TOSA.includes(r))
+        .map((r) => ({ label: r, set: { raca: r, porte: '' }, next: (b) => (b.tipo === 'plano' ? 'planos_fim' : 'cidade') })),
       { label: 'SRD (sem raça definida)', set: { raca: 'SRD (sem raça definida)' }, next: 'porte' },
       { label: 'Outra', set: { raca: 'Outra' }, next: 'porte' },
     ],

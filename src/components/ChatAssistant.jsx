@@ -35,6 +35,7 @@ export default function ChatAssistant() {
   const pet = petName.trim()
   const needsPetName = node.askPetName && !pet
   const finalMessage = node.final ? resolve(node.final, { ...answers, pet }) : null
+  const options = resolve(node.options, answers)
   const summary = node.summary ? Object.entries(SUMMARY_LABELS).filter(([k]) => answers[k]) : []
 
   useEffect(() => {
@@ -172,9 +173,9 @@ export default function ChatAssistant() {
               </div>
             )}
 
-            {!typing && node.options && (
+            {!typing && options && (
               <div className={`chat__options ${node.layout === 'grid' ? 'chat__options--grid' : ''}`}>
-                {node.options.map((o) => (
+                {options.map((o) => (
                   <button key={o.label} className="chat__option" onClick={() => choose(o)}>
                     {o.label}
                     {o.href && <ExternalLink size={13} />}
