@@ -9,7 +9,7 @@ const resolve = (value, answers) => (typeof value === 'function' ? value(answers
 
 function botMessage(nodeId, answers) {
   const node = FLOWS[nodeId]
-  return { role: 'assistant', text: resolve(node.text, answers), cards: node.cards }
+  return { role: 'assistant', text: resolve(node.text, answers) }
 }
 
 function initialState() {
@@ -136,16 +136,6 @@ export default function ChatAssistant() {
             {log.map((m, i) => (
               <div key={i} className={`chat__msg chat__msg--${m.role}`}>
                 {m.text}
-                {m.cards && (
-                  <div className="chat__cards">
-                    {m.cards.map((c) => (
-                      <div key={c.title} className={`chat__card ${c.featured ? 'chat__card--featured' : ''}`}>
-                        <strong>{c.title}</strong>
-                        <span>{c.desc}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             ))}
 
@@ -170,7 +160,7 @@ export default function ChatAssistant() {
             )}
 
             {!typing && node.options && (
-              <div className="chat__options">
+              <div className={`chat__options ${node.layout === 'grid' ? 'chat__options--grid' : ''}`}>
                 {node.options.map((o) => (
                   <button key={o.label} className="chat__option" onClick={() => choose(o)}>
                     {o.label}
@@ -391,34 +381,6 @@ export default function ChatAssistant() {
           30% { opacity: 1; transform: translateY(-4px); }
         }
 
-        .chat__cards {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          margin-top: 12px;
-        }
-        .chat__card {
-          padding: 10px 12px;
-          border-radius: 12px;
-          border: 1px solid rgba(214, 166, 245, 0.2);
-          background: rgba(15, 5, 24, 0.45);
-        }
-        .chat__card--featured { border-color: rgba(232, 194, 103, 0.6); }
-        .chat__card strong {
-          display: block;
-          font-family: var(--elegant);
-          font-size: 17px;
-          font-weight: 600;
-          color: var(--gold-light);
-          line-height: 1.2;
-          margin-bottom: 2px;
-        }
-        .chat__card span {
-          font-size: 12.5px;
-          line-height: 1.5;
-          color: var(--text-muted);
-        }
-
         .chat__summary {
           padding: 14px 16px;
           border-radius: 16px;
@@ -477,6 +439,20 @@ export default function ChatAssistant() {
           font-weight: 500;
           text-align: left;
           transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .chat__options--grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        .chat__options--grid .chat__option {
+          justify-content: center;
+          text-align: center;
+          padding: 10px 8px;
+          font-size: 13px;
+        }
+        .chat__options--grid .chat__option:hover { transform: none; }
+        .chat__options--grid .chat__option:nth-last-child(-n+2) {
+          grid-column: 1 / -1;
         }
         .chat__option:hover {
           background: rgba(232, 194, 103, 0.12);

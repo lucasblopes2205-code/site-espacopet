@@ -2,11 +2,16 @@
 // Uma opção leva a outra tela (`next`) e pode guardar uma resposta (`set`).
 // A tela final (`final`) monta a mensagem que será enviada para o WhatsApp.
 
+const RACAS = [
+  'Shih-tzu', 'Lhasa Apso', 'Yorkshire', 'Maltês', 'Poodle', 'Spitz Alemão',
+  'Pinscher', 'Dachshund', 'Bulldog Francês', 'Pug', 'Golden Retriever', 'Labrador',
+  'Border Collie', 'Gato',
+]
+
 const PORTE = [
-  { label: 'Cachorro pequeno', set: { porte: 'Cachorro de porte pequeno' } },
-  { label: 'Cachorro médio',   set: { porte: 'Cachorro de porte médio' } },
-  { label: 'Cachorro grande',  set: { porte: 'Cachorro de porte grande' } },
-  { label: 'Gato',             set: { porte: 'Gato' } },
+  { label: 'Pequeno', set: { porte: 'Pequeno' } },
+  { label: 'Médio',   set: { porte: 'Médio' } },
+  { label: 'Grande',  set: { porte: 'Grande' } },
 ]
 
 const CIDADE = [
@@ -27,13 +32,14 @@ const agendamento = (a) => [
   'Olá! Vim pelo site e gostaria de agendar 🐾',
   '',
   `• Serviço: ${a.servico}`,
-  a.porte && `• Pet: ${a.porte}`,
-  a.cidade && `• Cidade: ${a.cidade}`,
-  a.periodo && `• Preferência: ${a.periodo}`,
+  a.raca ? `• Raça: ${a.raca}` : null,
+  a.porte ? `• Porte: ${a.porte}` : null,
+  a.cidade ? `• Cidade: ${a.cidade}` : null,
+  a.periodo ? `• Preferência: ${a.periodo}` : null,
   '',
   'Nome do pet: ',
   'Podem me confirmar horário e valor?',
-].filter((l) => l !== undefined && l !== false && l !== null).join('\n')
+].filter((l) => l !== null).join('\n')
 
 export const START = 'inicio'
 
@@ -53,16 +59,11 @@ export const FLOWS = {
 
   // ---------- Banhos ----------
   banhos: {
-    text: 'Temos três experiências de banho, pensadas para cada momento do seu pet:',
-    cards: [
-      { title: 'Banho Clássico', desc: 'Banho com condicionador hidratante, corte de unhas, perfume pet, bandana e cromoterapia.' },
-      { title: 'Banho Signature', desc: 'O mais escolhido: shampoo premium, tosa higiênica, limpeza de ouvidos, hidratação da pelagem, perfume exclusivo e acessório premium.', featured: true },
-      { title: 'Spa Day', desc: 'O ritual completo: máscara de hidratação profunda, escovação de dentes, limpeza profunda de ouvidos, perfume importado e acessório exclusivo.' },
-    ],
+    text: 'Qual experiência de banho você deseja para o seu pet?',
     options: [
-      { label: 'Agendar Banho Clássico',  set: { servico: 'Banho Clássico' },  next: 'porte' },
-      { label: 'Agendar Banho Signature', set: { servico: 'Banho Signature' }, next: 'porte' },
-      { label: 'Agendar Spa Day',         set: { servico: 'Spa Day' },         next: 'porte' },
+      { label: 'Banho Clássico',  set: { servico: 'Banho Clássico' },  next: 'raca' },
+      { label: 'Banho Signature', set: { servico: 'Banho Signature' }, next: 'raca' },
+      { label: 'Spa Day',         set: { servico: 'Spa Day' },         next: 'raca' },
     ],
   },
 
@@ -70,17 +71,26 @@ export const FLOWS = {
   tosa: {
     text: 'Que tipo de tosa você procura?',
     options: [
-      { label: 'Tosa higiênica',        set: { servico: 'Tosa higiênica' },        next: 'porte' },
-      { label: 'Tosa na tesoura',       set: { servico: 'Tosa na tesoura' },       next: 'porte' },
-      { label: 'Tosa padrão da raça',   set: { servico: 'Tosa no padrão da raça' }, next: 'porte' },
-      { label: 'Tosa bebê',             set: { servico: 'Tosa bebê' },             next: 'porte' },
-      { label: 'Ainda não sei',         set: { servico: 'Tosa (quero uma indicação)' }, next: 'porte' },
+      { label: 'Tosa higiênica',        set: { servico: 'Tosa higiênica' },        next: 'raca' },
+      { label: 'Tosa na tesoura',       set: { servico: 'Tosa na tesoura' },       next: 'raca' },
+      { label: 'Tosa padrão da raça',   set: { servico: 'Tosa no padrão da raça' }, next: 'raca' },
+      { label: 'Tosa bebê',             set: { servico: 'Tosa bebê' },             next: 'raca' },
+      { label: 'Ainda não sei',         set: { servico: 'Tosa (quero uma indicação)' }, next: 'raca' },
     ],
   },
 
   // ---------- Etapas comuns de agendamento ----------
+  raca: {
+    text: 'Qual é a raça do seu pet?',
+    layout: 'grid',
+    options: [
+      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: 'cidade' })),
+      { label: 'SRD (sem raça definida)', set: { raca: 'SRD (sem raça definida)' }, next: 'porte' },
+      { label: 'Outra', set: { raca: 'Outra' }, next: 'porte' },
+    ],
+  },
   porte: {
-    text: 'Perfeito! Seu pet é:',
+    text: 'E qual é o porte dele(a)?',
     options: withNext(PORTE, 'cidade'),
   },
   cidade: {
@@ -181,7 +191,8 @@ export const FLOWS = {
 
 export const SUMMARY_LABELS = {
   servico: 'Serviço',
-  porte: 'Pet',
+  raca: 'Raça',
+  porte: 'Porte',
   cidade: 'Cidade',
   periodo: 'Preferência',
 }
