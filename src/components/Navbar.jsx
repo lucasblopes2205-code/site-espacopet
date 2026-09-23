@@ -1,326 +1,168 @@
-import { useState } from 'react'
-import {
-  Menu,
-  X,
-  Phone,
-  PawPrint,
-  Camera,
-} from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Menu, X, Phone, Camera } from 'lucide-react'
+import { Logo } from './ui'
+import { PHONE, PHONE_LABEL, INSTAGRAM_URL, whatsapp } from '../contact'
 
 const LINKS = [
-  { label: 'Serviços',   href: '#servicos'   },
-  { label: 'Promoções',  href: '#promocoes'  },
-  { label: 'Avaliações', href: '#avaliacoes' },
-  { label: 'Contato',    href: '#contato'    },
+  { label: 'O Espaço', href: '#espaco'   },
+  { label: 'Ritual',   href: '#ritual'   },
+  { label: 'Serviços', href: '#servicos' },
+  { label: 'Planos',   href: '#planos'   },
+  { label: 'Contato',  href: '#contato'  },
 ]
 
-const WHATSAPP_URL =
-  'https://wa.me/5543991820171?text=Olá! Gostaria de agendar um banho e tosa para meu pet 🐾'
-
-const INSTAGRAM_URL =
-  'https://instagram.com/espacopetdamel'
+const WHATSAPP_URL = whatsapp('Olá! Gostaria de agendar um horário para meu pet 🐾')
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <>
-      <nav style={styles.navbar}>
+    <nav className={`nav ${scrolled || menuOpen ? 'nav--solid' : ''}`}>
+      <div className="container nav__inner">
+        <a href="#" className="nav__brand" aria-label="Espaço Pet da Mel — início">
+          <Logo size={30} />
+        </a>
 
-        <div style={styles.container}>
-
-          {/* LOGO */}
-          <div style={styles.logo}>
-
-            <div style={styles.logoIcon}>
-              <PawPrint size={20} color="#4C1D95" />
-            </div>
-<div>
-<h1 style={styles.logoTitle}>
-  Espaço Pet{' '}
-  <span style={{
-    fontFamily: "'Dancing Script', cursive",
-    color: '#EC4899',
-    fontWeight: '700',
-    fontStyle: 'italic',
-  }}>
-    da Mel
-  </span>
-</h1>
-
-              <span style={styles.logoSubtitle}>
-                BANHO & TOSA
-              </span>
-            </div>
-          </div>
-
-          {/* DESKTOP */}
-          <div
-            style={styles.desktopMenu}
-            className="desktop-menu"
-          >
-
-            {/* LINKS */}
-  {LINKS.map((item) => (
-  <a
-    key={item.label}
-    href={item.href}
-    style={styles.link}
-  >
-    {item.label}
-  </a>
-))}
-
-            {/* INSTAGRAM */}
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noreferrer"
-              style={styles.iconButton}
-            >
-              <Camera size={18} />
+        <div className="nav__links">
+          {LINKS.map((item) => (
+            <a key={item.label} href={item.href} className="nav__link">
+              {item.label}
             </a>
-
-            {/* PHONE */}
-            <a
-              href="tel:+5543991820171"
-              style={styles.phone}
-            >
-              <Phone size={16} />
-              (43) 99182-0171
-            </a>
-
-            {/* BUTTON */}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noreferrer"
-              style={styles.button}
-            >
-              Agendar
-            </a>
-          </div>
-
-          {/* MOBILE BUTTON */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            style={styles.mobileButton}
-            className="mobile-button"
-          >
-            {menuOpen ? (
-              <X size={26} />
-            ) : (
-              <Menu size={26} />
-            )}
-          </button>
+          ))}
         </div>
 
-        {/* MOBILE MENU */}
-        {menuOpen && (
-          <div style={styles.mobileMenu}>
+        <div className="nav__actions">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="nav__icon" aria-label="Instagram">
+            <Camera size={17} strokeWidth={1.6} />
+          </a>
+          <a href={`tel:+${PHONE}`} className="nav__icon" aria-label={`Ligar ${PHONE_LABEL}`}>
+            <Phone size={16} strokeWidth={1.6} />
+          </a>
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="btn btn--gold nav__cta">
+            Agendar
+          </a>
+        </div>
 
-            {LINKS.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.mobileLink}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+        <button
+          className="nav__toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
-            {/* PHONE */}
-            <a
-              href="tel:+5543991820171"
-              style={styles.mobilePhone}
-            >
-              <Phone size={16} />
-              (43) 99182-0171
+      {menuOpen && (
+        <div className="nav__mobile">
+          {LINKS.map((item) => (
+            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
+              {item.label}
             </a>
+          ))}
+          <a href={`tel:+${PHONE}`} className="nav__mobile-phone">
+            <Phone size={15} /> {PHONE_LABEL}
+          </a>
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="btn btn--gold btn--block">
+            Agendar horário
+          </a>
+        </div>
+      )}
 
-            {/* BUTTON */}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noreferrer"
-              style={styles.mobileBtn}
-            >
-              Agendar Agora
-            </a>
-          </div>
-        )}
-      </nav>
-
-      {/* RESPONSIVE */}
       <style>{`
-        .mobile-button {
-          display: none;
+        .nav {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 999;
+          transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+          border-bottom: 1px solid transparent;
         }
-
-        @media (max-width: 900px) {
-          .desktop-menu {
-            display: none !important;
-          }
-
-          .mobile-button {
-            display: flex !important;
-          }
+        .nav--solid {
+          background: rgba(15, 5, 24, 0.86);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border-bottom-color: rgba(232, 194, 103, 0.18);
+        }
+        .nav__inner {
+          height: 84px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+        }
+        .logo { line-height: 1; white-space: nowrap; }
+        .nav__links { display: flex; gap: 34px; }
+        .nav__link {
+          position: relative;
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: var(--text-soft);
+          transition: color 0.2s;
+        }
+        .nav__link::after {
+          content: '';
+          position: absolute;
+          left: 0; right: 0; bottom: -8px;
+          height: 1px;
+          background: var(--gold);
+          transform: scaleX(0);
+          transition: transform 0.3s ease;
+        }
+        .nav__link:hover { color: var(--gold-light); }
+        .nav__link:hover::after { transform: scaleX(1); }
+        .nav__actions { display: flex; align-items: center; gap: 12px; }
+        .nav__icon {
+          width: 40px; height: 40px;
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          border: 1px solid rgba(232, 194, 103, 0.35);
+          color: var(--gold);
+          transition: background 0.2s;
+        }
+        .nav__icon:hover { background: rgba(232, 194, 103, 0.12); }
+        .nav__cta { padding: 12px 24px; font-size: 11px; margin-left: 6px; }
+        .nav__toggle {
+          display: none;
+          width: 44px; height: 44px;
+          border-radius: 12px;
+          border: 1px solid rgba(232, 194, 103, 0.35);
+          color: var(--gold);
+          align-items: center; justify-content: center;
+        }
+        .nav__mobile {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding: 12px 24px 28px;
+          border-top: 1px solid rgba(232, 194, 103, 0.15);
+        }
+        .nav__mobile a:not(.btn) {
+          font-size: 13px;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: var(--text-soft);
+        }
+        .nav__mobile .nav__mobile-phone {
+          display: flex; align-items: center; gap: 8px;
+          color: var(--gold) !important;
+          letter-spacing: 0.08em !important;
+        }
+        @media (max-width: 1020px) {
+          .nav__links, .nav__actions { display: none; }
+          .nav__toggle { display: flex; }
+          .nav__inner { height: 72px; }
         }
       `}</style>
-    </>
+    </nav>
   )
-}
-
-const styles = {
-  navbar: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 999,
-    width: '100%',
-    background: 'rgba(255,255,255,0.96)',
-    backdropFilter: 'blur(10px)',
-    borderBottom: '1px solid rgba(0,0,0,0.05)',
-  },
-
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    height: '78px',
-    padding: '0 24px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-
-  logoIcon: {
-    width: '46px',
-    height: '46px',
-    borderRadius: '50%',
-    background:
-      'linear-gradient(135deg, #F9A8D4, #C084FC)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '0 8px 20px rgba(192,132,252,0.35)',
-  },
-
-  logoTitle: {
-    margin: 0,
-    fontSize: '18px',
-    fontWeight: '800',
-    color: '#4C1D95',
-    lineHeight: 1,
-  },
-
-  logoSubtitle: {
-    color: '#A855F7',
-    fontSize: '10px',
-    fontWeight: '700',
-    letterSpacing: '2px',
-  },
-
-  desktopMenu: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '24px',
-  },
-
-  link: {
-    textDecoration: 'none',
-    color: '#4C1D95',
-    fontSize: '14px',
-    fontWeight: '600',
-    transition: '0.2s',
-  },
-
-  iconButton: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    background: '#F3E8FF',
-    color: '#7E22CE',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textDecoration: 'none',
-  },
-
-  phone: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    textDecoration: 'none',
-    color: '#7E22CE',
-    fontSize: '14px',
-    fontWeight: '700',
-  },
-
-  button: {
-    textDecoration: 'none',
-    background:
-      'linear-gradient(135deg, #EC4899, #A855F7)',
-    color: 'white',
-    padding: '12px 24px',
-    borderRadius: '999px',
-    fontWeight: '700',
-    fontSize: '14px',
-    boxShadow: '0 10px 25px rgba(236,72,153,0.25)',
-  },
-
-  mobileButton: {
-    display: 'none',
-    width: '44px',
-    height: '44px',
-    borderRadius: '12px',
-    border: 'none',
-    background: '#F3E8FF',
-    color: '#4C1D95',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-  },
-
-  mobileMenu: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '18px',
-    padding: '24px',
-    background: 'white',
-    borderTop: '1px solid rgba(0,0,0,0.05)',
-  },
-
-  mobileLink: {
-    textDecoration: 'none',
-    color: '#4C1D95',
-    fontSize: '15px',
-    fontWeight: '700',
-  },
-
-  mobilePhone: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    textDecoration: 'none',
-    color: '#A855F7',
-    fontWeight: '700',
-  },
-
-  mobileBtn: {
-    textDecoration: 'none',
-    textAlign: 'center',
-    background:
-      'linear-gradient(135deg, #EC4899, #A855F7)',
-    color: 'white',
-    padding: '14px',
-    borderRadius: '999px',
-    fontWeight: '700',
-    marginTop: '6px',
-  },
 }

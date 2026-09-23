@@ -1,347 +1,175 @@
-import {
-  Bath,
-  Scissors,
-  Heart,
-} from 'lucide-react'
+import { Bath, Scissors, Heart } from 'lucide-react'
+import { SectionHeader } from './ui'
+import { whatsapp } from '../contact'
 
-const discounts = [
+const plans = [
   {
     icon: Bath,
-    percent: '15%',
-    tag: 'Plano MEL BANHO',
-    desc:
-      'No pacote de 4 banhos para usar em até 4 meses. Economize e mantenha a higiene do pet sempre em dia.',
-    featured: false,
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Banho.',
+    percent: '15',
+    name: 'Mel',
+    script: 'Banho',
+    desc: 'Pacote de 4 banhos para usar em até 4 meses. A higiene do seu pet sempre em dia, com economia.',
   },
-
   {
     icon: Scissors,
-    percent: '20%',
-    tag: 'Plano Mel Aparadinho',
-    desc:
-      'Pacote de 3 tosas para usar em até 6 meses. Seu pet sempre bonito e bem cuidado.',
+    percent: '20',
+    name: 'Mel',
+    script: 'Aparadinho',
     featured: true,
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20aquirir%20o%20Plano%20Mel%20Aparadinho.',
+    desc: 'Pacote de 3 tosas para usar em até 6 meses. Seu pet sempre elegante e bem cuidado.',
   },
-
   {
     icon: Heart,
-    percent: '10%',
-    tag: 'Plano Mel Bebê',
-    desc:
-      'Especial para filhotes de até 6 meses com atendimento delicado e cuidadoso.',
-    featured: false,
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20adquirir%20o%20Plano%20Mel%20Bebê.',
+    percent: '10',
+    name: 'Mel',
+    script: 'Bebê',
+    desc: 'Especial para filhotes de até 6 meses, com um atendimento delicado e muito paciente.',
   },
 ]
 
 export default function Discounts() {
   return (
-    <section
-      id="promocoes"
-      style={styles.section}
-    >
+    <section className="section section--alt" id="planos">
+      <div className="sparkles" />
 
-      <div style={styles.circleTop} />
-      <div style={styles.circleBottom} />
+      <div className="container" style={{ position: 'relative' }}>
+        <SectionHeader eyebrow="Clube Mel" title="Planos" script="exclusivos" scriptColor="magenta">
+          Cuidado contínuo com condições especiais para quem faz parte da nossa família.
+        </SectionHeader>
 
-      <div style={styles.container}>
+        <div className="plans">
+          {plans.map(({ icon: Icon, percent, name, script, featured, desc }) => (
+            <article
+              key={script}
+              className={`glow-card ${featured ? 'glow-card--gold' : ''} plan`}
+            >
+              {featured && <span className="menu__badge">Mais procurado</span>}
 
-        {/* HEADER */}
-        <div style={styles.header}>
+              <Icon size={26} strokeWidth={1.3} className="plan__icon" />
 
-          <div style={styles.tag}>
-            🎉 Promoções especiais
-          </div>
-
-          <h2 style={styles.title}>
-            Economize com nossas ofertas
-          </h2>
-
-          <p style={styles.subtitle}>
-            Aproveite nossas promoções e cuide
-            do seu pet gastando menos.
-          </p>
-        </div>
-
-        {/* GRID */}
-        <div
-          style={styles.grid}
-          className="discounts-grid"
-        >
-
-          {discounts.map((discount) => {
-            const Icon = discount.icon
-
-            return (
-              <div
-                key={discount.tag}
-                style={{
-                  ...styles.card,
-
-                  border: discount.featured
-                    ? '1.5px solid rgba(249,168,212,0.5)'
-                    : '1px solid rgba(255,255,255,0.15)',
-
-                  background: discount.featured
-                    ? 'rgba(255,255,255,0.16)'
-                    : 'rgba(255,255,255,0.08)',
-                }}
-              >
-
-                {/* BADGE */}
-                {discount.featured && (
-                  <div style={styles.featuredBadge}>
-                    ⭐ MAIS PROCURADO
-                  </div>
-                )}
-
-                {/* ICON */}
-                <div style={styles.iconWrap}>
-                  <Icon
-                    size={26}
-                    color="#F9A8D4"
-                    strokeWidth={1.8}
-                  />
-                </div>
-
-                {/* PERCENT */}
-                <div style={styles.percent}>
-                  {discount.percent}
-                </div>
-
-                <div style={styles.off}>
-                  OFF
-                </div>
-
-                {/* TAG */}
-                <div style={styles.tagBadge}>
-                  {discount.tag.toUpperCase()}
-                </div>
-
-                {/* DESCRIPTION */}
-                <p style={styles.desc}>
-                  {discount.desc}
-                </p>
-
-                {/* BUTTON */}
-                <a
-                  href={discount.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={styles.button}
-                >
-                  Aproveitar oferta
-                </a>
+              <div className="plan__name">
+                <span className="plan__label">Plano</span>
+                {name} <span className="script--gold">{script}</span>
               </div>
-            )
-          })}
+
+              <div className="plan__percent">
+                <span className="gold-text">{percent}</span>
+                <small>
+                  <span className="gold-text">%</span>
+                  <em>off</em>
+                </small>
+              </div>
+
+              <p>{desc}</p>
+
+              <a
+                href={whatsapp(`Olá! Gostaria de adquirir o Plano ${name} ${script}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn btn--block ${featured ? 'btn--gold' : 'btn--ghost'}`}
+              >
+                Quero este plano
+              </a>
+            </article>
+          ))}
         </div>
 
-        {/* FOOTER */}
-        <p style={styles.footer}>
-          * Promoções não cumulativas.
-          Consulte condições completas em loja.
+        <p className="plans__note">
+          * Planos não cumulativos. Consulte as condições completas no Espaço.
         </p>
-
-        {/* RESPONSIVE */}
-        <style>{`
-          @media (max-width: 768px) {
-            .discounts-grid {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}</style>
       </div>
+
+      <style>{`
+        .plans {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 28px;
+        }
+        .plan {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 48px 32px 36px;
+        }
+        .plan__icon {
+          color: var(--gold);
+          margin-bottom: 18px;
+        }
+        .plan__name {
+          font-family: var(--serif);
+          font-size: 26px;
+          font-weight: 600;
+          color: var(--text);
+          line-height: 1.2;
+        }
+        .plan__name .script--gold { font-size: 1.45em; }
+        .plan__label {
+          display: block;
+          font-family: var(--sans);
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.34em;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          margin-bottom: 6px;
+        }
+        .plan__percent {
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          margin: 20px 0 16px;
+          font-family: var(--serif);
+          line-height: 0.9;
+        }
+        .plan__percent > span {
+          font-size: 96px;
+          font-weight: 700;
+        }
+        .plan__percent small {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-left: 4px;
+          padding-top: 10px;
+        }
+        .plan__percent small > span {
+          font-size: 40px;
+          font-weight: 700;
+        }
+        .plan__percent em {
+          font-family: var(--sans);
+          font-style: normal;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--magenta);
+          margin-top: 6px;
+        }
+        .plan p {
+          font-size: 14px;
+          color: var(--text-muted);
+          flex-grow: 1;
+          margin-bottom: 30px;
+        }
+        .plans__note {
+          text-align: center;
+          margin-top: 40px;
+          font-size: 12px;
+          letter-spacing: 0.04em;
+          color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+          .plans {
+            grid-template-columns: 1fr;
+            max-width: 440px;
+            margin: 0 auto;
+            gap: 40px;
+          }
+        }
+      `}</style>
     </section>
   )
-}
-
-const styles = {
-  section: {
-    padding: '88px 24px',
-    background:
-      'linear-gradient(135deg, #4C1D95 0%, #7C3AED 100%)',
-    position: 'relative',
-    overflow: 'hidden',
-  },
-
-  circleTop: {
-    position: 'absolute',
-    top: '-80px',
-    right: '-80px',
-    width: '320px',
-    height: '320px',
-    borderRadius: '50%',
-    background: 'rgba(255,255,255,0.04)',
-  },
-
-  circleBottom: {
-    position: 'absolute',
-    bottom: '-60px',
-    left: '-60px',
-    width: '260px',
-    height: '260px',
-    borderRadius: '50%',
-    background: 'rgba(255,255,255,0.04)',
-  },
-
-  container: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-    position: 'relative',
-    zIndex: 1,
-  },
-
-  header: {
-    textAlign: 'center',
-    marginBottom: '52px',
-  },
-
-  tag: {
-    display: 'inline-block',
-    background: 'rgba(245,158,11,0.2)',
-    border: '1px solid rgba(251,191,36,0.3)',
-    color: '#FDE68A',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '14px',
-    padding: '5px 16px',
-    borderRadius: '20px',
-    marginBottom: '16px',
-  },
-
-  title: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '40px',
-    color: 'white',
-    margin: '0 0 12px 0',
-  },
-
-  subtitle: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#C4B5FD',
-    fontSize: '16px',
-    lineHeight: 1.7,
-    maxWidth: '440px',
-    margin: '0 auto',
-  },
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '20px',
-  },
-
-  /* ALTERAÇÃO PRINCIPAL */
-  card: {
-    borderRadius: '24px',
-    padding: '36px 28px',
-    textAlign: 'center',
-    position: 'relative',
-    backdropFilter: 'blur(10px)',
-
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
-  featuredBadge: {
-    position: 'absolute',
-    top: '-14px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    background:
-      'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '11px',
-    padding: '4px 16px',
-    borderRadius: '20px',
-    whiteSpace: 'nowrap',
-    boxShadow:
-      '0 4px 12px rgba(236,72,153,0.35)',
-  },
-
-  iconWrap: {
-    width: '56px',
-    height: '56px',
-    borderRadius: '16px',
-    background: 'rgba(255,255,255,0.08)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 auto 20px',
-  },
-
-  percent: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '64px',
-    color: '#FCD34D',
-    lineHeight: 1,
-    marginBottom: '4px',
-  },
-
-  off: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '22px',
-    color: 'white',
-    marginBottom: '12px',
-  },
-
-  tagBadge: {
-    display: 'inline-block',
-    background: 'rgba(251,191,36,0.15)',
-    border: '1px solid rgba(251,191,36,0.3)',
-    color: '#FDE68A',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '11px',
-    padding: '3px 14px',
-    borderRadius: '20px',
-    letterSpacing: '1px',
-    marginBottom: '16px',
-  },
-
-  /* ALTERAÇÃO PRINCIPAL */
-  desc: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#C4B5FD',
-    fontSize: '14px',
-    lineHeight: 1.7,
-    margin: '0 0 24px 0',
-
-    flexGrow: 1,
-  },
-
-  button: {
-    width: '100%',
-    background:
-      'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '16px',
-    padding: '13px',
-    borderRadius: '14px',
-    textDecoration: 'none',
-    display: 'block',
-    textAlign: 'center',
-    boxSizing: 'border-box',
-  },
-
-  footer: {
-    textAlign: 'center',
-    marginTop: '36px',
-    fontFamily: "'Nunito', sans-serif",
-    color: '#A78BFA',
-    fontSize: '13px',
-  },
 }

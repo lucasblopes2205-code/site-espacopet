@@ -1,330 +1,190 @@
-import {
-  CheckCircle,
-  Bath,
-  Scissors,
-  Sparkles,
-} from 'lucide-react'
+import { Bath, Scissors, Sparkles } from 'lucide-react'
+import { Ornament, Paw, SectionHeader } from './ui'
+import { whatsapp } from '../contact'
 
 const services = [
   {
     icon: Bath,
-    title: 'Banho Básico',
-    desc: 'Ideal para a higiene do dia a dia do seu pet.',
-    color: '#F3E8FF',
-    iconColor: '#7C3AED',
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20agendar%20um%20Banho%20Básico',
+    title: 'Banho',
+    script: 'Clássico',
+    variant: 'magenta',
     items: [
-      'Shampoo adequado ao tipo de pelo',
-      'Condicionador hidratante',
-      'Secagem completa',
-      'Escovação leve',
+      'Banho com condicionador hidratante',
+      'Corte de unhas',
+      'Perfume pet',
+      'Bandana comum',
+      'Cromoterapia',
     ],
   },
-
   {
     icon: Scissors,
-    title: 'Banho & Tosa',
-    desc: 'O pacote mais completo para deixar seu pet impecável.',
-    color: '#FCE7F3',
-    iconColor: '#EC4899',
+    title: 'Banho',
+    script: 'Signature',
+    variant: 'gold',
     featured: true,
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20agendar%20Banho%20e%20Tosa',
     items: [
-      'Tudo do Banho Básico',
-      'Tosa higiênica ou no padrão',
-      'Limpeza de ouvidos',
+      'Banho com shampoo premium',
       'Corte de unhas',
+      'Tosa higiênica',
+      'Limpeza superficial de ouvidos',
+      'Hidratação da pelagem',
+      'Perfume exclusivo pet',
+      'Acessório premium',
+      'Cromoterapia',
     ],
   },
-
   {
     icon: Sparkles,
-    title: 'Spa Premium',
-    desc: 'Experiência de luxo para um pet ainda mais feliz.',
-    color: '#FEF3C7',
-    iconColor: '#F59E0B',
-    whatsapp:
-      'https://wa.me/5543991820171?text=Olá,%20gostaria%20de%20agendar%20Spa%20Premium',
+    title: 'Spa',
+    script: 'Day',
+    variant: 'lilac',
     items: [
-      'Tudo do Banho & Tosa',
-      'Hidratação profunda',
-      'Perfume especial',
-      'Bandana temática',
+      'Banho com shampoo para o tipo de pelo',
+      'Corte e lixamento de unhas',
+      'Tosa higiênica',
+      'Limpeza profunda de ouvidos',
+      'Escovação de dentes (se possível)',
+      'Máscara de hidratação profunda',
+      'Perfume importado pet',
+      'Cromoterapia',
+      'Acessório exclusivo',
     ],
   },
 ]
 
 export default function Services() {
   return (
-    <section
-      id="servicos"
-      style={styles.section}
-    >
-      <div style={styles.container}>
+    <section className="section section--alt" id="servicos">
+      <div className="sparkles" />
 
-        {/* Header */}
-        <div style={styles.header}>
+      <div className="container" style={{ position: 'relative' }}>
+        <SectionHeader eyebrow="Menu de serviços" title="Experiências" script="para cada pet">
+          Três níveis de cuidado, do banho essencial ao dia de spa completo.
+          Escolha a experiência ideal para o seu melhor amigo.
+        </SectionHeader>
 
-          <div style={styles.tag}>
-            💫 Nossos serviços
-          </div>
+        <div className="menu">
+          {services.map(({ icon: Icon, title, script, variant, featured, items }) => (
+            <article
+              key={script}
+              className={`glow-card glow-card--${variant} menu__card ${featured ? 'menu__card--featured' : ''}`}
+            >
+              {featured && <span className="menu__badge">Mais escolhido</span>}
 
-          <h2 style={styles.title}>
-            Pacotes para cada necessidade
-          </h2>
-
-          <p style={styles.subtitle}>
-            Escolha o pacote ideal para o seu pet.
-            Todos realizados por profissionais especializados
-            com produtos de qualidade.
-          </p>
-        </div>
-
-        {/* Grid */}
-        <div
-          style={styles.grid}
-          className="services-grid"
-        >
-
-          {services.map((service) => {
-            const Icon = service.icon
-
-            return (
-              <div
-                key={service.title}
-                style={{
-                  ...styles.card,
-                  border: service.featured
-                    ? '2px solid #EC4899'
-                    : '1.5px solid #DDD6FE',
-                }}
-              >
-
-                {/* Badge */}
-                {service.featured && (
-                  <div style={styles.popularBadge}>
-                    ⭐ MAIS POPULAR
-                  </div>
-                )}
-
-                {/* Icon */}
-                <div
-                  style={{
-                    ...styles.iconWrap,
-                    background: service.color,
-                  }}
-                >
-                  <Icon
-                    size={26}
-                    color={service.iconColor}
-                    strokeWidth={1.8}
-                  />
-                </div>
-
-                {/* Title */}
-                <h3 style={styles.cardTitle}>
-                  {service.title}
-                </h3>
-
-                {/* Description */}
-                <p style={styles.cardDesc}>
-                  {service.desc}
-                </p>
-
-                {/* Items */}
-                <div style={styles.itemsList}>
-                  {service.items.map((item) => (
-                    <div
-                      key={item}
-                      style={styles.item}
-                    >
-
-                      <CheckCircle
-                        size={16}
-                        color="#7C3AED"
-                        style={{
-                          flexShrink: 0,
-                          marginTop: 2,
-                        }}
-                      />
-
-                      <span style={styles.itemText}>
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Button */}
-                <a
-                  href={service.whatsapp}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={styles.button}
-                >
-                  Agendar este pacote
-                </a>
+              <div className="menu__icon">
+                <Icon size={featured ? 54 : 46} strokeWidth={1.1} />
               </div>
-            )
-          })}
-        </div>
 
-        {/* Responsive */}
-        <style>{`
-          @media (max-width: 900px) {
-            .services-grid {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}</style>
+              <h3 className={`menu__title ${featured ? 'gold-text' : ''}`}>{title}</h3>
+              <span className={`menu__script ${variant === 'magenta' ? 'script--magenta' : 'script--gold'}`}>
+                {script}
+              </span>
+
+              <div className="menu__divider">
+                <Ornament size={16} />
+              </div>
+
+              <ul className="paw-list menu__list">
+                {items.map((item) => (
+                  <li key={item}>
+                    <Paw size={16} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={whatsapp(`Olá! Gostaria de agendar o ${title} ${script} 🐾`)}
+                target="_blank"
+                rel="noreferrer"
+                className={`btn btn--block ${featured ? 'btn--gold' : 'btn--ghost'}`}
+              >
+                Agendar
+              </a>
+            </article>
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        .menu {
+          display: grid;
+          grid-template-columns: 1fr 1.08fr 1fr;
+          gap: 28px;
+          align-items: stretch;
+        }
+        .menu__card {
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          padding: 48px 32px 36px;
+        }
+        .menu__card--featured {
+          padding-top: 60px;
+          margin: -18px 0;
+          background:
+            radial-gradient(ellipse 90% 45% at 50% 0%, rgba(232, 194, 103, 0.16), transparent 70%),
+            linear-gradient(180deg, rgba(38, 12, 50, 0.95), rgba(18, 5, 28, 0.97));
+        }
+        .menu__badge {
+          position: absolute;
+          top: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 7px 20px;
+          border-radius: 999px;
+          background: var(--gold-grad);
+          color: #2A0E3A;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          box-shadow: 0 6px 20px rgba(232, 194, 103, 0.35);
+        }
+        .menu__icon {
+          color: var(--gold);
+          display: flex;
+          justify-content: center;
+          margin-bottom: 22px;
+          filter: drop-shadow(0 0 12px rgba(232, 194, 103, 0.45));
+        }
+        .menu__title {
+          font-size: 50px;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          line-height: 1;
+        }
+        .menu__card--featured .menu__title { font-size: 56px; }
+        .menu__script {
+          display: block;
+          font-size: 56px;
+          line-height: 1.1;
+          margin-top: -4px;
+        }
+        .menu__divider { margin: 18px 0 28px; }
+        .menu__list {
+          text-align: left;
+          flex-grow: 1;
+          margin-bottom: 36px;
+        }
+
+        @media (max-width: 960px) {
+          .menu {
+            grid-template-columns: 1fr;
+            max-width: 460px;
+            margin: 0 auto;
+            gap: 44px;
+          }
+          .menu__card--featured { margin: 0; order: -1; }
+        }
+        @media (max-width: 480px) {
+          .menu__card { padding: 44px 24px 28px; }
+          .menu__title, .menu__card--featured .menu__title { font-size: 42px; }
+          .menu__script { font-size: 48px; }
+        }
+      `}</style>
     </section>
   )
-}
-
-const styles = {
-  section: {
-    background: '#ffffff',
-    padding: '88px 24px',
-  },
-
-  container: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-  },
-
-  header: {
-    textAlign: 'center',
-    marginBottom: '52px',
-  },
-
-  tag: {
-    display: 'inline-block',
-    background:
-      'linear-gradient(135deg, #F3E8FF, #DDD6FE)',
-    color: '#6D28D9',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '14px',
-    padding: '5px 16px',
-    borderRadius: '20px',
-    marginBottom: '16px',
-  },
-
-  title: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '40px',
-    color: '#4C1D95',
-    margin: '0 0 12px 0',
-  },
-
-  subtitle: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#6B7280',
-    fontSize: '16px',
-    lineHeight: 1.7,
-    maxWidth: '520px',
-    margin: '0 auto',
-  },
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '24px',
-  },
-
-  card: {
-    background: '#ffffff',
-    borderRadius: '24px',
-    padding: '32px',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    transition:
-      'transform 0.25s ease, box-shadow 0.25s ease',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
-  },
-
-  popularBadge: {
-    position: 'absolute',
-    top: '-14px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    background:
-      'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '12px',
-    padding: '5px 18px',
-    borderRadius: '20px',
-    whiteSpace: 'nowrap',
-    boxShadow: '0 4px 12px rgba(236,72,153,0.35)',
-  },
-
-  iconWrap: {
-    width: '60px',
-    height: '60px',
-    borderRadius: '18px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '20px',
-  },
-
-  cardTitle: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '22px',
-    color: '#4C1D95',
-    margin: '0 0 8px 0',
-  },
-
-  cardDesc: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#6B7280',
-    fontSize: '14px',
-    lineHeight: 1.65,
-    margin: '0 0 20px 0',
-  },
-
-  itemsList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    marginBottom: '24px',
-    flexGrow: 1,
-  },
-
-  item: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '8px',
-  },
-
-  itemText: {
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '14px',
-    color: '#374151',
-    lineHeight: 1.5,
-  },
-
-  button: {
-    width: '100%',
-    background:
-      'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '16px',
-    padding: '13px',
-    borderRadius: '16px',
-    textDecoration: 'none',
-    display: 'block',
-    textAlign: 'center',
-    boxSizing: 'border-box',
-  },
 }

@@ -1,364 +1,164 @@
-import {
-  Clock,
-  Heart,
-  CheckCircle,
-  Star,
-  Phone,
-} from 'lucide-react'
-
-const WHATSAPP_URL =
-  'https://wa.me/5543991820171?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20para%20meu%20pet%20🐾'
+import { CalendarHeart, Car, ClipboardCheck, Home, Phone } from 'lucide-react'
+import { SectionHeader } from './ui'
+import { PHONE, PHONE_LABEL, whatsapp } from '../contact'
 
 const steps = [
   {
     number: '01',
-    icon: Clock,
-    title: 'Agende um horário',
-    desc:
-      'Marque pelo site, WhatsApp ou ligue para nós. Escolha o melhor horário para sua rotina.',
-    color: '#F3E8FF',
-    iconColor: '#7C3AED',
+    icon: CalendarHeart,
+    title: 'Agende seu horário',
+    desc: 'Pelo WhatsApp ou por telefone, no horário que encaixa na sua rotina.',
   },
-
   {
     number: '02',
-    icon: Heart,
-    title: 'Traga seu pet ou buscamos',
-    desc:
-      'Você pode trazer seu pet até nossa loja ou solicitar busca em domicílio.',
-    color: '#FCE7F3',
-    iconColor: '#EC4899',
+    icon: Car,
+    title: 'Traga ou buscamos',
+    desc: 'Traga seu pet até o Espaço ou peça a busca em domicílio.',
   },
-
   {
     number: '03',
-    icon: CheckCircle,
+    icon: ClipboardCheck,
     title: 'Check-in personalizado',
-    desc:
-      'Confirmamos todos os cuidados necessários antes do atendimento.',
-    color: '#F3E8FF',
-    iconColor: '#7C3AED',
+    desc: 'Conversamos sobre as preferências e necessidades do seu pet antes de começar.',
   },
-
   {
     number: '04',
-    icon: Star,
+    icon: Home,
     title: 'Retire ou receba em casa',
-    desc:
-      'Seu pet volta limpo, cheiroso e feliz com toda praticidade.',
-    color: '#FCE7F3',
-    iconColor: '#EC4899',
+    desc: 'Seu pet volta limpo, perfumado e feliz, do jeito que você preferir.',
   },
 ]
 
 export default function HowItWorks() {
   return (
-    <section style={styles.section}>
+    <section className="section">
+      <div className="container">
+        <SectionHeader eyebrow="Atendimento" title="Como funciona" script="a experiência">
+          Em quatro passos seu pet recebe todo o cuidado que merece, sem complicação.
+        </SectionHeader>
 
-      <div style={styles.container}>
-
-        {/* HEADER */}
-        <div style={styles.header}>
-
-          <div style={styles.tag}>
-            🗓 Simples assim
-          </div>
-
-          <h2 style={styles.title}>
-            Como funciona o atendimento
-          </h2>
-
-          <p style={styles.subtitle}>
-            Em apenas 4 passos seu pet recebe
-            todo o carinho e cuidado que merece.
-          </p>
-        </div>
-
-        {/* GRID */}
-        <div
-          style={styles.grid}
-          className="how-grid"
-        >
-
-          {steps.map((step) => {
-            const Icon = step.icon
-
-            return (
-              <div
-                key={step.number}
-                style={styles.card}
-              >
-
-                <div style={styles.number}>
-                  {step.number}
-                </div>
-
-                <div
-                  style={{
-                    ...styles.iconWrap,
-                    background: step.color,
-                  }}
-                >
-                  <Icon
-                    size={24}
-                    color={step.iconColor}
-                    strokeWidth={1.8}
-                  />
-                </div>
-
-                <h3 style={styles.cardTitle}>
-                  {step.title}
-                </h3>
-
-                <p style={styles.cardDesc}>
-                  {step.desc}
-                </p>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* BANNER */}
-        <div
-          style={styles.banner}
-          className="how-banner"
-        >
-
-          {/* Left */}
-          <div>
-
-            <div style={styles.bannerTitle}>
-              Pronto para agendar?
+        <div className="how">
+          {steps.map(({ number, icon: Icon, title, desc }) => (
+            <div key={number} className="how__card">
+              <span className="how__number gold-text">{number}</span>
+              <Icon size={24} strokeWidth={1.4} className="how__icon" />
+              <h3>{title}</h3>
+              <p>{desc}</p>
             </div>
+          ))}
+        </div>
 
-            <p style={styles.bannerSub}>
-              Atendimento de segunda a sábado,
-              com horários flexíveis e serviço
-              de busca e entrega sob consulta.
+        <div className="glow-card glow-card--gold how__banner">
+          <div>
+            <h3>
+              Pronto para <span className="script--gold">agendar?</span>
+            </h3>
+            <p>
+              Atendimento de segunda a sábado, com hora marcada e serviço de
+              busca e entrega sob consulta.
             </p>
           </div>
-
-          {/* Buttons */}
-          <div
-            style={styles.bannerButtons}
-            className="how-banner-buttons"
-          >
-
-            {/* WhatsApp */}
+          <div className="how__buttons">
             <a
-  href={WHATSAPP_URL}
-  target="_blank"
-  rel="noopener noreferrer"
-  style={styles.btnPrimary}
->
-  Agendar agora →
-</a>
-
-            {/* Phone */}
-            <a
-              href="tel:+5543991820171"
-              style={styles.btnOutline}
+              href={whatsapp('Olá! Gostaria de agendar um horário para meu pet 🐾')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--gold"
             >
-              <Phone
-                size={15}
-                style={{ marginRight: 6 }}
-              />
-
-              (43) 99182-0171
+              Agendar agora
+            </a>
+            <a href={`tel:+${PHONE}`} className="btn btn--ghost">
+              <Phone size={15} strokeWidth={1.8} />
+              {PHONE_LABEL}
             </a>
           </div>
         </div>
-
-        {/* RESPONSIVE */}
-        <style>{`
-          @media (max-width: 768px) {
-            .how-grid {
-              grid-template-columns: 1fr 1fr !important;
-            }
-
-            .how-banner {
-              flex-direction: column !important;
-              text-align: center !important;
-              padding: 28px 20px !important;
-            }
-
-            .how-banner-buttons {
-              justify-content: center !important;
-              width: 100% !important;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .how-grid {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}</style>
       </div>
+
+      <style>{`
+        .how {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        .how__card {
+          position: relative;
+          padding: 34px 26px;
+          border-radius: 22px;
+          background: linear-gradient(180deg, rgba(38, 12, 56, 0.55), rgba(20, 6, 30, 0.5));
+          border: 1px solid rgba(214, 166, 245, 0.16);
+          transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .how__card:hover {
+          border-color: rgba(232, 194, 103, 0.5);
+          transform: translateY(-4px);
+        }
+        .how__number {
+          display: block;
+          font-family: var(--serif);
+          font-size: 46px;
+          font-weight: 700;
+          line-height: 1;
+          margin-bottom: 22px;
+        }
+        .how__icon {
+          position: absolute;
+          top: 36px;
+          right: 26px;
+          color: var(--magenta);
+        }
+        .how__card h3 {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          line-height: 1.25;
+        }
+        .how__card p {
+          font-size: 14px;
+          color: var(--text-muted);
+        }
+        .how__banner {
+          margin-top: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 32px;
+          padding: 44px 48px;
+        }
+        .how__banner:hover { transform: none; }
+        .how__banner h3 {
+          font-size: 34px;
+          font-weight: 600;
+        }
+        .how__banner h3 .script--gold { font-size: 1.3em; }
+        .how__banner p {
+          margin-top: 10px;
+          color: var(--text-muted);
+          max-width: 460px;
+          font-size: 15px;
+        }
+        .how__buttons {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+
+        @media (max-width: 960px) {
+          .how { grid-template-columns: 1fr 1fr; }
+          .how__banner {
+            flex-direction: column;
+            text-align: center;
+            padding: 40px 28px;
+          }
+          .how__banner p { margin-left: auto; margin-right: auto; }
+          .how__buttons { justify-content: center; }
+        }
+        @media (max-width: 560px) {
+          .how { grid-template-columns: 1fr; }
+          .how__buttons .btn { width: 100%; }
+          .how__banner h3 { font-size: 28px; }
+        }
+      `}</style>
     </section>
   )
-}
-
-const styles = {
-  section: {
-    background: '#FAF5FF',
-    padding: '88px 24px',
-  },
-
-  container: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-  },
-
-  header: {
-    textAlign: 'center',
-    marginBottom: '52px',
-  },
-
-  tag: {
-    display: 'inline-block',
-    background:
-      'linear-gradient(135deg, #F3E8FF, #DDD6FE)',
-    color: '#6D28D9',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '14px',
-    padding: '5px 16px',
-    borderRadius: '20px',
-    marginBottom: '16px',
-  },
-
-  title: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '40px',
-    color: '#4C1D95',
-    margin: '0 0 12px 0',
-  },
-
-  subtitle: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#6B7280',
-    fontSize: '16px',
-    lineHeight: 1.7,
-    maxWidth: '500px',
-    margin: '0 auto',
-  },
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '20px',
-  },
-
-  card: {
-    background: '#ffffff',
-    borderRadius: '22px',
-    padding: '28px 22px',
-    border: '1.5px solid #DDD6FE',
-    textAlign: 'center',
-    boxShadow: '0 8px 20px rgba(0,0,0,0.04)',
-  },
-
-  number: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '44px',
-    color: '#DDD6FE',
-    lineHeight: 1,
-    marginBottom: '14px',
-  },
-
-  iconWrap: {
-    width: '56px',
-    height: '56px',
-    borderRadius: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 auto 18px',
-  },
-
-  cardTitle: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '17px',
-    color: '#4C1D95',
-    margin: '0 0 10px 0',
-    lineHeight: 1.3,
-  },
-
-  cardDesc: {
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '13px',
-    color: '#6B7280',
-    lineHeight: 1.7,
-    margin: 0,
-  },
-
-  banner: {
-    marginTop: '48px',
-    background:
-      'linear-gradient(135deg, #4C1D95, #7C3AED)',
-    borderRadius: '24px',
-    padding: '36px 40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '24px',
-    flexWrap: 'wrap',
-  },
-
-  bannerTitle: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '24px',
-    color: 'white',
-    marginBottom: '8px',
-  },
-
-  bannerSub: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#C4B5FD',
-    fontSize: '14px',
-    lineHeight: 1.6,
-    margin: 0,
-    maxWidth: '480px',
-  },
-
-  bannerButtons: {
-    display: 'flex',
-    gap: '14px',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-
-  btnPrimary: {
-    background:
-      'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '16px',
-    padding: '13px 28px',
-    borderRadius: '30px',
-    textDecoration: 'none',
-    display: 'inline-block',
-    whiteSpace: 'nowrap',
-  },
-
-  btnOutline: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    background: 'transparent',
-    border: '2px solid rgba(255,255,255,0.4)',
-    color: 'white',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '15px',
-    padding: '12px 22px',
-    borderRadius: '30px',
-    textDecoration: 'none',
-    whiteSpace: 'nowrap',
-  },
 }

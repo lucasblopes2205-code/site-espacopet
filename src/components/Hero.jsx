@@ -1,342 +1,211 @@
-import { Phone, Calendar, PawPrint } from 'lucide-react'
-
+import { Phone, Camera } from 'lucide-react'
+import { Ornament } from './ui'
+import { PHONE, PHONE_LABEL, INSTAGRAM_URL, whatsapp } from '../contact'
 
 export default function Hero() {
   return (
-    <section style={styles.hero}>
+    <section className="hero" id="inicio">
+      <div className="hero__glow" />
+      <div className="sparkles" />
 
-      {/* Background gradiente */}
-      <div style={styles.background} />
+      <div className="container hero__grid">
+        <div className="hero__text">
+          <span className="eyebrow">Banho &amp; Estética Pet</span>
 
-      {/* Conteúdo */}
-      <div style={styles.container} className="hero-container">
-
-        {/* LEFT */}
-        <div style={styles.left}>
-
-          <div style={styles.badge}>
-            <PawPrint size={14} />
-            Seu pet, nossa estrela!
-          </div>
-
-          <h1 style={styles.title}>
-            Banho & Tosa com
-            <span style={styles.highlight}> amor e carinho</span>
+          <h1 className="hero__title">
+            A arte de cuidar
+            <span className="script--gold hero__script">do seu pet</span>
           </h1>
 
-          <p style={styles.subtitle}>
-            Atendimento especializado para deixar seu pet feliz,
-            cheiroso e saudável. Profissionais apaixonados por animais.
+          <p className="hero__lead">
+            Um ritual de beleza e bem-estar pensado nos mínimos detalhes.
+            Produtos premium, mãos experientes e um ambiente acolhedor para
+            quem é parte da família.
           </p>
 
-          <div style={styles.buttons} className="hero-buttons">
+          <div className="hero__buttons">
             <a
-  href="https://wa.me/5543991820171"
-  target="_blank"
-  rel="noreferrer"
-  style={styles.primaryButton}
->
-  <Calendar size={18} />
-  Agendar agora
-</a>
-            <a href="tel:+5543991820171" style={styles.phoneButton}>
-              <Phone size={18} />
-              (43) 99182-0171
+              href={whatsapp('Olá! Gostaria de agendar uma experiência para meu pet 🐾')}
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn--gold"
+            >
+              Agendar experiência
+            </a>
+            <a href={`tel:+${PHONE}`} className="btn btn--ghost">
+              <Phone size={15} strokeWidth={1.8} />
+              {PHONE_LABEL}
             </a>
           </div>
 
-        </div>
-
-        {/* RIGHT — Fachada */}
-        <div style={styles.right}>
-
-          <div style={styles.fachadaWrap}>
-
-            <img
-              src="/images/fachada.png"
-              alt="Espaço Pet da Mel"
-              style={styles.fachadaImg}
-            />
-
-            {/* Badge aberto agora */}
-            <div style={styles.badgeAberto}>
-              <span style={styles.badgeDot} />
-              <span style={styles.badgeAbertoText}>
-                Seg–Sex 8h às 18h | Sáb 8h às 16h
-              </span>
+          <div className="hero__meta">
+            <div>
+              <strong>Seg – Sex</strong>
+              <span>8h às 18h</span>
             </div>
-
-
-            {/* Badge instagram */}
-            <a
-  href="https://instagram.com/espacopetdamel"
-  target="_blank"
-  rel="noreferrer"
-  style={styles.badgeInsta}
->
-  <span style={styles.instaText}>
-    @espacopetdamel
-  </span>
-</a>
-
+            <div className="hero__meta-sep" />
+            <div>
+              <strong>Sábado</strong>
+              <span>8h às 16h</span>
+            </div>
+            <div className="hero__meta-sep" />
+            <div>
+              <strong>Ribeirão Claro</strong>
+              <span>Paraná</span>
+            </div>
           </div>
         </div>
+
+        <div className="hero__visual">
+          <div className="photo-frame hero__frame">
+            <img src="/images/fachada.png" alt="Fachada do Espaço Pet da Mel" />
+          </div>
+
+          <div className="pill hero__pill-top">
+            <span className="dot-live" />
+            Atendimento com hora marcada
+          </div>
+
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="pill hero__pill-bottom">
+            <Camera size={14} strokeWidth={1.6} />
+            @espacopetdamel
+          </a>
+        </div>
       </div>
 
-      {/* Onda */}
-      <div style={styles.wave}>
-        <svg
-          viewBox="0 0 1440 80"
-          preserveAspectRatio="none"
-          style={{ width: '100%', height: '80px', display: 'block' }}
-        >
-          <path
-            d="M0,40 C300,80 1100,0 1440,40 L1440,80 L0,80 Z"
-            fill="#FAF5FF"
-          />
-        </svg>
+      <div className="hero__bottom">
+        <Ornament />
       </div>
 
-<style>{`
-  .hero-container {
-    padding: 100px 20px 120px !important;
-  }
+      <style>{`
+        .hero {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 140px 0 70px;
+          overflow: hidden;
+          background:
+            radial-gradient(ellipse 60% 70% at 85% 30%, rgba(166, 75, 223, 0.28), transparent 70%),
+            radial-gradient(ellipse 50% 60% at 5% 90%, rgba(240, 64, 158, 0.16), transparent 70%),
+            linear-gradient(180deg, #0F0518 0%, #1A0828 55%, #0F0518 100%);
+        }
+        .hero__glow {
+          position: absolute;
+          width: 700px; height: 700px;
+          right: -200px; top: -120px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(232, 194, 103, 0.10), transparent 65%);
+          pointer-events: none;
+        }
+        .hero__grid {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 72px;
+          align-items: center;
+        }
+        .hero__title {
+          font-size: clamp(44px, 6.4vw, 78px);
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          margin: 26px 0 0;
+        }
+        .hero__script {
+          display: block;
+          font-size: 1.22em;
+          line-height: 1.05;
+          margin-top: 4px;
+        }
+        .hero__lead {
+          margin: 28px 0 0;
+          max-width: 520px;
+          font-size: 17px;
+          font-weight: 300;
+          color: var(--text-soft);
+        }
+        .hero__buttons {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 40px;
+        }
+        .hero__meta {
+          display: flex;
+          align-items: center;
+          gap: 26px;
+          margin-top: 52px;
+          padding-top: 28px;
+          border-top: 1px solid rgba(232, 194, 103, 0.18);
+          max-width: 520px;
+        }
+        .hero__meta strong {
+          display: block;
+          font-family: var(--serif);
+          font-size: 17px;
+          font-weight: 600;
+          color: var(--gold-light);
+        }
+        .hero__meta span {
+          font-size: 13px;
+          color: var(--text-muted);
+          letter-spacing: 0.06em;
+        }
+        .hero__meta-sep {
+          width: 1px;
+          height: 36px;
+          background: rgba(232, 194, 103, 0.3);
+        }
+        .hero__visual {
+          position: relative;
+          display: flex;
+          justify-content: center;
+        }
+        .hero__frame {
+          width: 100%;
+          max-width: 440px;
+          height: 560px;
+        }
+        .hero__pill-top {
+          position: absolute;
+          top: 90px;
+          left: -18px;
+        }
+        .hero__pill-bottom {
+          position: absolute;
+          bottom: 40px;
+          right: -10px;
+        }
+        .hero__bottom {
+          position: relative;
+          z-index: 2;
+          margin-top: 64px;
+        }
 
-  @media (max-width: 960px) {
-    .hero-container {
-      grid-template-columns: 1fr !important;
-      text-align: center;
-      padding: 80px 20px 100px !important;
-    }
-
-    .hero-container h1 {
-      font-size: 42px !important;
-    }
-
-    .hero-buttons {
-      justify-content: center;
-    }
-
-    .hero-stats {
-      justify-content: center;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .hero-container h1 {
-      font-size: 34px !important;
-    }
-  }
-`}</style>
+        @media (max-width: 960px) {
+          .hero { padding: 120px 0 56px; }
+          .hero__grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 56px;
+          }
+          .hero__lead, .hero__meta { margin-left: auto; margin-right: auto; }
+          .hero__buttons, .hero__meta { justify-content: center; }
+          .hero__frame { height: 460px; max-width: 380px; }
+          .hero__pill-top { left: 0; top: 60px; }
+          .hero__pill-bottom { right: 0; }
+        }
+        @media (max-width: 480px) {
+          .hero__frame { height: 400px; }
+          .hero__meta { gap: 16px; }
+          .hero__meta strong { font-size: 15px; }
+          .hero__meta span { font-size: 12px; }
+          .hero__buttons .btn { width: 100%; }
+          .hero__pill-top, .hero__pill-bottom { font-size: 11px; }
+        }
+      `}</style>
     </section>
   )
-}
-
-const styles = {
-  hero: {
-    position: 'relative',
-    minHeight: '100vh',
-    overflow: 'hidden',
-    display: 'flex',
-    alignItems: 'center',
-    background: 'linear-gradient(135deg, #4C1D95 0%, #7C3AED 50%, #EC4899 100%)',
-  },
-  background: {
-    position: 'absolute',
-    inset: 0,
-    background: 'radial-gradient(circle at top right, rgba(255,255,255,0.12), transparent 40%)',
-  },
-  container: {
-    position: 'relative',
-    zIndex: 2,
-    width: '100%',
-    maxWidth: '1100px',
-    margin: '0 auto',
-    padding: '120px 24px 140px',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '60px',
-    alignItems: 'center',
-  },
-  left: {},
-  badge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px',
-    background: 'rgba(255,255,255,0.12)',
-    border: '1px solid rgba(255,255,255,0.2)',
-    color: '#FBCFE8',
-    padding: '8px 18px',
-    borderRadius: '999px',
-    fontSize: '13px',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    marginBottom: '26px',
-  },
-  title: {
-    color: 'white',
-    fontSize: '62px',
-    lineHeight: 1.05,
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    margin: '0 0 24px 0',
-  },
-  highlight: {
-    color: '#F9A8D4',
-  },
-  subtitle: {
-    color: 'rgba(255,255,255,0.82)',
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '18px',
-    lineHeight: 1.8,
-    maxWidth: '520px',
-    margin: '0 0 38px 0',
-  },
-  buttons: {
-    display: 'flex',
-    gap: '16px',
-    flexWrap: 'wrap',
-    marginBottom: '48px',
-  },
-  primaryButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    border: 'none',
-    background: 'linear-gradient(135deg, #EC4899, #F472B6)',
-    color: 'white',
-    padding: '15px 28px',
-    borderRadius: '999px',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '16px',
-    cursor: 'pointer',
-    boxShadow: '0 10px 30px rgba(236,72,153,0.4)',
-  },
-  phoneButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    textDecoration: 'none',
-    border: '2px solid rgba(255,255,255,0.35)',
-    color: 'white',
-    padding: '13px 24px',
-    borderRadius: '999px',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '15px',
-  },
-  stats: {
-    display: 'flex',
-    gap: '32px',
-    flexWrap: 'wrap',
-  },
-  statCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  statValue: {
-    color: '#F9A8D4',
-    fontFamily: "'Fredoka', sans-serif",
-    fontSize: '32px',
-    fontWeight: '700',
-    lineHeight: 1,
-  },
-  statLabel: {
-    color: 'rgba(255,255,255,0.65)',
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '13px',
-  },
-  right: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  fachadaWrap: {
-    position: 'relative',
-    width: '100%',
-    maxWidth: '520px',
-    borderRadius: '28px',
-    overflow: 'hidden',
-    boxShadow: '0 32px 80px rgba(0,0,0,0.45)',
-  },
-  fachadaImg: {
-    width: '100%',
-    height: '520px',
-    objectFit: 'cover',
-    objectPosition: 'center',
-    display: 'block',
-  },
-  badgeAberto: {
-    position: 'absolute',
-    top: '18px',
-    left: '18px',
-    background: 'rgba(255,255,255,0.96)',
-    borderRadius: '999px',
-    padding: '8px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-  },
-  badgeDot: {
-    width: '8px',
-    height: '8px',
-    borderRadius: '50%',
-    background: '#22C55E',
-    flexShrink: 0,
-    display: 'inline-block',
-  },
-  badgeAbertoText: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '12px',
-    color: '#4C1D95',
-  },
-  badgeRating: {
-    position: 'absolute',
-    bottom: '18px',
-    left: '18px',
-    background: 'rgba(255,255,255,0.96)',
-    borderRadius: '16px',
-    padding: '10px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-  },
-  ratingStars: {
-    color: '#F59E0B',
-    fontSize: '14px',
-  },
-  ratingText: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '12px',
-    color: '#4C1D95',
-  },
- badgeInsta: {
-  position: 'absolute',
-  bottom: '18px',
-  right: '18px',
-  background: 'linear-gradient(135deg, #EC4899, #7C3AED)',
-  borderRadius: '16px',
-  padding: '10px 16px',
-  boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-  textDecoration: 'none',
-},
-  instaText: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '12px',
-    color: 'white',
-  },
-  wave: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 2,
-  },
 }

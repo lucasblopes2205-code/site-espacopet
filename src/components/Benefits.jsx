@@ -1,4 +1,5 @@
-import { CheckCircle, Star } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
+import { Paw } from './ui'
 
 const items = [
   'O banho é um aliado no tratamento de doenças de pele nos pets.',
@@ -9,224 +10,129 @@ const items = [
 
 export default function Benefits() {
   return (
-    <section style={styles.section}>
-      <div style={styles.container} className="benefits-container">
+    <section className="section section--alt" id="espaco">
+      <div className="sparkles" />
 
-        {/* Imagem */}
-        <div style={styles.imageWrap}>
-          <div style={styles.imageBg} className="benefits-image">
+      <div className="container benefits">
+        <div className="benefits__visual">
+          <div className="benefits__frame">
+            <img src="/images/benefits.jpg" alt="Pet recebendo cuidados no Espaço Pet da Mel" />
+          </div>
 
-            <img
-              src="/images/benefits.jpg"
-              alt="Cuidado com o pet"
-              style={styles.photo}
-            />
-
-            {/* Badge inferior */}
-            <div style={styles.badgeBottom}>
-              <Star size={18} color="#F59E0B" fill="#F59E0B" />
-              <div>
-                <div style={styles.badgeTitle}>Indicado por veterinários</div>
-                <div style={styles.badgeSub}>Cuidado preventivo certificado</div>
-              </div>
+          <div className="benefits__badge">
+            <ShieldCheck size={22} strokeWidth={1.5} />
+            <div>
+              <strong>Indicado por veterinários</strong>
+              <span>Cuidado preventivo e seguro</span>
             </div>
-
-            {/* Badge superior */}
-            <div style={styles.badgeTop}>
-              <div style={styles.badgeTopNumber}>100%</div>
-              <div style={styles.badgeTopLabel}>SEGURO</div>
-            </div>
-
           </div>
         </div>
 
-        {/* Texto */}
-        <div style={styles.content}>
+        <div className="benefits__text">
+          <span className="eyebrow">Saúde &amp; Bem-estar</span>
 
-          <div style={styles.tag}>
-            🩺 Saúde em primeiro lugar
-          </div>
-
-          <h2 style={styles.title}>
-            A higiene do pet é indicada por veterinários
+          <h2 className="benefits__title">
+            Beleza que começa
+            <span className="script--magenta">pela saúde</span>
           </h2>
 
-          <p style={styles.subtitle}>
-            Com cuidados preventivos, a higiene reduz a transmissão de
-            doenças para pets e humanos, garantindo mais saúde e qualidade
-            de vida para toda a família.
+          <p className="benefits__lead">
+            A higiene regular é recomendada por veterinários: previne doenças,
+            protege pets e humanos e garante mais qualidade de vida para toda a família.
           </p>
 
-          {items.map((item, i) => (
-            <div key={i} style={styles.checkItem}>
-              <CheckCircle
-                size={20}
-                color="#7C3AED"
-                style={{ flexShrink: 0, marginTop: 2 }}
-              />
-              <span style={styles.checkText}>{item}</span>
-            </div>
-          ))}
+          <ul className="paw-list">
+            {items.map((item) => (
+              <li key={item}>
+                <Paw size={18} />
+                {item}
+              </li>
+            ))}
+          </ul>
 
-<a
-  href="#servicos"
-  style={styles.button}
->
-  Conhecer nossos serviços →
-</a>
-
+          <a href="#servicos" className="btn btn--ghost benefits__btn">
+            Conhecer o menu de serviços
+          </a>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .benefits-container {
-            grid-template-columns: 1fr !important;
-          }
-          .benefits-image {
-            height: 280px !important;
-          }
+        .benefits {
+          position: relative;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+        .benefits__visual { position: relative; }
+        .benefits__frame {
+          position: relative;
+          border-radius: var(--radius);
+          overflow: hidden;
+          height: 520px;
+          border: 1.5px solid rgba(240, 64, 158, 0.6);
+          box-shadow: 0 0 40px rgba(240, 64, 158, 0.25), 0 30px 80px rgba(0, 0, 0, 0.55);
+        }
+        .benefits__frame::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 55%, rgba(15, 5, 24, 0.7));
+        }
+        .benefits__frame img { width: 100%; height: 100%; object-fit: cover; }
+        .benefits__badge {
+          position: absolute;
+          left: 50%;
+          bottom: -28px;
+          transform: translateX(-50%);
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 16px 24px;
+          border-radius: 18px;
+          background: rgba(20, 6, 30, 0.95);
+          border: 1px solid rgba(232, 194, 103, 0.5);
+          box-shadow: 0 0 30px rgba(232, 194, 103, 0.18);
+          color: var(--gold);
+          white-space: nowrap;
+          z-index: 2;
+        }
+        .benefits__badge strong {
+          display: block;
+          font-family: var(--serif);
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text);
+        }
+        .benefits__badge span { font-size: 12px; color: var(--text-muted); }
+        .benefits__title {
+          font-size: clamp(34px, 4.6vw, 50px);
+          margin: 20px 0 0;
+        }
+        .benefits__title .script--magenta {
+          display: block;
+          font-size: 1.25em;
+          line-height: 1.1;
+        }
+        .benefits__lead {
+          margin: 24px 0 32px;
+          color: var(--text-muted);
+          font-size: 16px;
+        }
+        .benefits__btn { margin-top: 40px; }
+
+        @media (max-width: 860px) {
+          .benefits { grid-template-columns: 1fr; gap: 72px; }
+          .benefits__frame { height: 380px; }
+          .benefits__text { text-align: center; }
+          .benefits__text .paw-list { text-align: left; max-width: 480px; margin: 0 auto; }
+        }
+        @media (max-width: 480px) {
+          .benefits__badge { padding: 14px 18px; }
+          .benefits__badge strong { font-size: 14px; }
+          .benefits__btn { width: 100%; white-space: normal; }
         }
       `}</style>
     </section>
   )
-}
-
-const styles = {
-  section: {
-    background: '#ffffff',
-    padding: '88px 24px',
-  },
-  container: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '64px',
-    alignItems: 'center',
-  },
-  imageWrap: {
-    position: 'relative',
-  },
-  imageBg: {
-    width: '100%',
-    height: '420px',
-    borderRadius: '28px',
-    background: 'linear-gradient(135deg, #7C3AED, #EC4899)',
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  photo: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: '28px',
-    display: 'block',
-  },
-  badgeBottom: {
-    position: 'absolute',
-    bottom: '20px',
-    left: '20px',
-    background: 'rgba(255,255,255,0.97)',
-    borderRadius: '16px',
-    padding: '12px 18px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-  },
-  badgeTitle: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '13px',
-    color: '#4C1D95',
-    margin: 0,
-  },
-  badgeSub: {
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '11px',
-    color: '#6B7280',
-    margin: 0,
-  },
-  badgeTop: {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    background: 'linear-gradient(135deg, #F59E0B, #FCD34D)',
-    borderRadius: '14px',
-    padding: '10px 16px',
-    textAlign: 'center',
-    boxShadow: '0 4px 16px rgba(245,158,11,0.4)',
-  },
-  badgeTopNumber: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '22px',
-    color: '#4C1D95',
-    lineHeight: 1,
-    margin: 0,
-  },
-  badgeTopLabel: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '700',
-    fontSize: '10px',
-    color: '#78350f',
-    letterSpacing: '1px',
-    margin: 0,
-  },
-  content: {},
-  tag: {
-    display: 'inline-block',
-    background: 'linear-gradient(135deg, #F3E8FF, #DDD6FE)',
-    color: '#6D28D9',
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '14px',
-    padding: '5px 16px',
-    borderRadius: '20px',
-    marginBottom: '16px',
-  },
-  title: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: '600',
-    fontSize: '38px',
-    color: '#4C1D95',
-    lineHeight: 1.2,
-    marginBottom: '16px',
-    margin: '0 0 16px 0',
-  },
-  subtitle: {
-    fontFamily: "'Nunito', sans-serif",
-    color: '#6B7280',
-    fontSize: '16px',
-    lineHeight: 1.75,
-    marginBottom: '28px',
-    margin: '0 0 28px 0',
-  },
-  checkItem: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '10px',
-    marginBottom: '12px',
-  },
-  checkText: {
-    fontFamily: "'Nunito', sans-serif",
-    fontSize: '15px',
-    color: '#374151',
-    lineHeight: 1.6,
-  },
-button: {
-  marginTop: '28px',
-  background: 'linear-gradient(135deg, #EC4899, #F472B6)',
-  color: 'white',
-  border: 'none',
-  fontFamily: "'Fredoka', sans-serif",
-  fontWeight: '600',
-  fontSize: '16px',
-  padding: '13px 30px',
-  borderRadius: '30px',
-  cursor: 'pointer',
-  textDecoration: 'none',
-  display: 'inline-block',
-},
 }

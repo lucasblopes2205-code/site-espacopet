@@ -1,304 +1,150 @@
-import {
-  Phone,
-  MapPin,
-  Clock,
-  PawPrint,
-  Camera,
-} from 'lucide-react'
-
-const WA = 'https://wa.me/5543991820171?text='
+import { Phone, MapPin, Clock, Camera } from 'lucide-react'
+import { Logo, Ornament } from './ui'
+import { PHONE, PHONE_LABEL, INSTAGRAM_URL, whatsapp } from '../contact'
 
 const footerLinks = {
   Serviços: [
-    { label: 'Banho',       href: '#servicos' },
-    { label: 'Tosa',        href: '#servicos' },
-    { label: 'Hidratação',  href: '#servicos' },
-    { label: 'Perfumes',    href: '#servicos' },
-    { label: 'Acessórios',  href: '#servicos' },
+    { label: 'Banho Clássico',  href: '#servicos' },
+    { label: 'Banho Signature', href: '#servicos' },
+    { label: 'Spa Day',         href: '#servicos' },
+    { label: 'Planos',          href: '#planos' },
   ],
-
-  Empresa: [
-    { label: 'Sobre nós',   href: '#' },
-    { label: 'Promoções',   href: '#promocoes' },
-  ],
-
-  Suporte: [
-    { label: 'Agendamento',   href: WA + encodeURIComponent('Olá, gostaria de realizar um agendamento'), target: '_blank' },
-    { label: 'Cancelamentos', href: WA + encodeURIComponent('Olá, gostaria de realizar um cancelamento'), target: '_blank' },
-    { label: 'Fale conosco',  href: WA + encodeURIComponent('Olá, gostaria de falar com vocês'), target: '_blank' },
+  Atendimento: [
+    { label: 'Agendamento',   href: whatsapp('Olá, gostaria de realizar um agendamento'), external: true },
+    { label: 'Cancelamentos', href: whatsapp('Olá, gostaria de realizar um cancelamento'), external: true },
+    { label: 'Fale conosco',  href: whatsapp('Olá, gostaria de falar com vocês'), external: true },
   ],
 }
 
 export default function Footer() {
   return (
-    <footer style={styles.footer}>
-
-      <div style={styles.container}>
-
-        {/* TOP */}
-        <div style={styles.top} className="footer-top">
-
-          {/* Brand */}
-          <div style={styles.brand}>
-
-            {/* Logo */}
-            <div style={styles.logo}>
-
-              <div style={styles.logoIcon}>
-                <PawPrint size={22} color="#F160A9" />
-              </div>
-<div>
-<div style={styles.logoName}>
-  Espaço Pet{' '}
-  <span style={{
-    fontFamily: "'Dancing Script', cursive",
-    color: '#EC4899',
-    fontWeight: '700',
-    fontStyle: 'italic',
-  }}>
-    da Mel
-  </span>
-</div>
-
-                <span style={styles.logoSubtitle}>
-                  BANHO & TOSA
-                </span>
-              </div>
-            </div>
-
-            {/* Description */}
-            <p style={styles.description}>
-              Amor, carinho e cuidado para o seu melhor amigo.
-              Atendimento especializado para deixar seu pet
-              feliz, saudável e cheiroso.
+    <footer className="footer">
+      <div className="container">
+        <div className="footer__top">
+          <div className="footer__brand">
+            <Logo size={44} />
+            <p>
+              Banho e estética pet com carinho, técnica e produtos selecionados.
+              Um espaço pensado para o bem-estar do seu melhor amigo.
             </p>
-
-            {/* Contact */}
-            <div style={styles.contactList}>
-
-              <a
-                href="tel:+5543991820171"
-                style={styles.contactItem}
-              >
-                <Phone size={16} />
-                (43) 99182-0171
+            <div className="footer__contact">
+              <a href={`tel:+${PHONE}`}><Phone size={15} strokeWidth={1.6} /> {PHONE_LABEL}</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                <Camera size={15} strokeWidth={1.6} /> @espacopetdamel
               </a>
-
-              <a
-                href="https://instagram.com/espacopetdamel"
-                target="_blank"
-                rel="noreferrer"
-                style={styles.contactItem}
-              >
-                <Camera size={16} />
-                @espacopetdamel
-              </a>
-
-              <div style={styles.contactItem}>
-                <MapPin size={16} />
-                R. Cel. Emílio Gomes, 219 - Ribeirão Claro, PR, 86410-000
-              </div>
-
-              <div style={styles.contactItem}>
-  <Clock size={16} />
-
-  <div>
-    <div>Seg–Sex • 8h às 18h</div>
-    <div>Sáb • 8h às 16h</div>
-  </div>
-</div>
-</div>
-
+              <span><MapPin size={15} strokeWidth={1.6} /> R. Cel. Emílio Gomes, 219 · Ribeirão Claro, PR, 86410-000</span>
+              <span><Clock size={15} strokeWidth={1.6} /> Seg – Sex 8h às 18h · Sáb 8h às 16h</span>
+            </div>
           </div>
 
-          {/* Link columns */}
           {Object.entries(footerLinks).map(([title, items]) => (
-            <div
-              key={title}
-              style={styles.column}
-            >
-
-              <h3 style={styles.columnTitle}>
-                {title}
-              </h3>
-
-              <div style={styles.links}>
-                {items.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.target || '_self'}
-                    rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-                    style={styles.link}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
+            <div key={title} className="footer__col">
+              <h4>{title}</h4>
+              {items.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
           ))}
         </div>
 
-        {/* Divider */}
-        <div style={styles.divider} />
+        <div className="footer__sign">
+          <Ornament />
+          <span>Ribeirão Claro · PR</span>
+        </div>
 
-        {/* Bottom */}
-        <div style={styles.bottom} className="footer-bottom">
-
-          <span style={styles.bottomText}>
-            © 2026 Espaço Pet da Mel.
-            Todos os direitos reservados.
-          </span>
-
-          <span style={styles.bottomText}>
-            Feito com ❤️ para os pets
-          </span>
+        <div className="footer__bottom">
+          <span>© {new Date().getFullYear()} Espaço Pet da Mel. Todos os direitos reservados.</span>
+          <span>Feito com amor para os pets</span>
         </div>
       </div>
 
-      {/* Responsive */}
       <style>{`
-        @media (max-width: 900px) {
-          .footer-grid {
-            grid-template-columns: 1fr !important;
-          }
+        .footer {
+          position: relative;
+          padding: 96px 0 32px;
+          background: linear-gradient(180deg, var(--bg-2), #0A0310);
+          border-top: 1px solid rgba(232, 194, 103, 0.2);
         }
-      `}</style>
- <style>{`
+        .footer__top {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr;
+          gap: 56px;
+        }
+        .footer__brand p {
+          margin: 20px 0 28px;
+          max-width: 380px;
+          font-size: 14px;
+          color: var(--text-muted);
+        }
+        .footer__contact {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          font-size: 13px;
+          color: var(--text-soft);
+        }
+        .footer__contact > * {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .footer__contact svg { color: var(--gold); flex-shrink: 0; }
+        .footer__contact a:hover { color: var(--gold-light); }
+        .footer__col {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .footer__col h4 {
+          font-family: var(--sans);
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--gold);
+          margin-bottom: 8px;
+        }
+        .footer__col a {
+          font-size: 14px;
+          color: var(--text-muted);
+          transition: color 0.2s;
+        }
+        .footer__col a:hover { color: var(--text); }
+        .footer__sign {
+          margin: 72px 0 40px;
+          text-align: center;
+        }
+        .footer__sign span {
+          display: block;
+          margin-top: 14px;
+          font-size: 12px;
+          letter-spacing: 0.42em;
+          text-transform: uppercase;
+          color: var(--text-soft);
+        }
+        .footer__bottom {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding-top: 24px;
+          border-top: 1px solid rgba(232, 194, 103, 0.12);
+          font-size: 12px;
+          color: var(--text-muted);
+        }
+
         @media (max-width: 768px) {
-          .footer-top {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-          .footer-bottom {
-            flex-direction: column !important;
-            text-align: center !important;
-            gap: 8px !important;
-          }
+          .footer__top { grid-template-columns: 1fr 1fr; gap: 40px; }
+          .footer__brand { grid-column: 1 / -1; }
+          .footer__bottom { flex-direction: column; text-align: center; }
         }
       `}</style>
     </footer>
   )
-}
-
-const styles = {
-  footer: {
-    background:
-      'linear-gradient(135deg, #4C1D95 0%, #6D28D9 100%)',
-    padding: '80px 24px 28px',
-    color: 'white',
-  },
-
-  container: {
-    width: '100%',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-
-  top: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr 1fr',
-    gap: '48px',
-    marginBottom: '50px',
-  },
-
-  brand: {},
-
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '14px',
-    marginBottom: '24px',
-  },
-
-  logoIcon: {
-    width: '52px',
-    height: '52px',
-    borderRadius: '50%',
-    background:
-      'linear-gradient(135deg, #F9A8D4, #C084FC)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-
-  logoTitle: {
-    margin: 0,
-    fontSize: '22px',
-    fontWeight: '800',
-    lineHeight: 1,
-  },
-
-  logoSubtitle: {
-    color: '#F9A8D4',
-    fontSize: '10px',
-    letterSpacing: '2px',
-    fontWeight: '700',
-  },
-
-  description: {
-    color: '#DDD6FE',
-    fontSize: '15px',
-    lineHeight: 1.8,
-    maxWidth: '320px',
-    marginBottom: '28px',
-  },
-
-  contactList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '14px',
-  },
-
-  contactItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    color: '#DDD6FE',
-    textDecoration: 'none',
-    fontSize: '14px',
-    fontWeight: '600',
-  },
-
-  column: {},
-
-  columnTitle: {
-    margin: '0 0 20px',
-    fontSize: '16px',
-    fontWeight: '700',
-    color: 'white',
-  },
-
-  links: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-
-  link: {
-    textDecoration: 'none',
-    color: '#DDD6FE',
-    fontSize: '14px',
-    transition: '0.2s',
-  },
-
-  divider: {
-    height: '1px',
-    background: 'rgba(255,255,255,0.12)',
-    marginBottom: '26px',
-  },
-
-  bottom: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    gap: '12px',
-  },
-
-  bottomText: {
-    color: '#C4B5FD',
-    fontSize: '13px',
-  },
 }
