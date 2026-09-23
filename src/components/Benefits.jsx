@@ -16,7 +16,7 @@ export default function Benefits() {
       <div className="container benefits">
         <div className="benefits__visual">
           <div className="benefits__frame">
-            <img src="/images/benefits.jpg" alt="Pet recebendo cuidados no Espaço Pet da Mel" />
+            <img src="/images/spitz-consultorio.jpg" alt="Lulu da Pomerânia sobre a mesa de um consultório veterinário" />
           </div>
 
           <div className="benefits__badge">
@@ -79,7 +79,7 @@ export default function Benefits() {
           inset: 0;
           background: linear-gradient(180deg, transparent 55%, rgba(15, 5, 24, 0.7));
         }
-        .benefits__frame img { width: 100%; height: 100%; object-fit: cover; }
+        .benefits__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
         .benefits__badge {
           position: absolute;
           left: 50%;
