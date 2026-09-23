@@ -177,7 +177,7 @@ export default function Services() {
             margin: 0 auto;
             gap: 44px;
           }
-          .menu__card--featured { margin: 0; order: -1; }
+          .menu__card--featured { margin: 0; }
         }
         @media (max-width: 480px) {
           .menu__card { padding: 44px 24px 28px; }

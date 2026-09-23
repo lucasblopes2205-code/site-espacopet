@@ -18,9 +18,9 @@ export default function Hero() {
           </h1>
 
           <p className="hero__lead">
-            Um ritual de beleza e bem-estar pensado nos mínimos detalhes.
+            Uma experiência de beleza e bem-estar pensada nos mínimos detalhes.
             Produtos premium, mãos experientes e um ambiente acolhedor para
-            quem é parte da família.
+            quem faz parte da sua família.
           </p>
 
           <div className="hero__buttons">
@@ -200,11 +200,19 @@ export default function Hero() {
           }
           .hero__lead, .hero__meta { margin-left: auto; margin-right: auto; }
           .hero__buttons, .hero__meta { justify-content: center; }
-          .hero__frame { height: 460px; max-width: 380px; }
+          /* No celular a moldura segue a proporção da foto (3:4) e o arco fica mais suave, sem cortar a fachada */
+          .hero__frame {
+            height: auto;
+            max-width: 380px;
+            aspect-ratio: 3 / 4;
+            border-radius: 50% 50% 24px 24px / 22% 22% 24px 24px;
+          }
+          .hero__frame img {
+            border-radius: 50% 50% 16px 16px / 21% 21% 16px 16px;
+          }
           .hero__pill-bottom { right: 0; }
         }
         @media (max-width: 480px) {
-          .hero__frame { height: 400px; }
           .hero__meta { gap: 18px 28px; }
           .hero__meta strong { font-size: 15px; }
           .hero__meta span { font-size: 12px; }

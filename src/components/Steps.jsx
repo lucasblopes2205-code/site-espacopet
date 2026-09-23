@@ -30,19 +30,19 @@ const steps = [
 
 export default function Steps() {
   return (
-    <section className="section" id="ritual">
+    <section className="section" id="etapas">
       <div className="container">
-        <SectionHeader eyebrow="Passo a passo" title="O ritual" script="de cuidado" scriptColor="magenta">
+        <SectionHeader eyebrow="Passo a passo" title="Etapas" script="do cuidado" scriptColor="magenta">
           Cada etapa é feita com calma e atenção, pensando no conforto e no bem-estar do seu pet.
         </SectionHeader>
 
-        <div className="ritual">
+        <div className="etapas">
           {steps.map(({ icon: Icon, number, title, desc }) => (
-            <div key={number} className="ritual__step">
-              <div className="ritual__icon">
+            <div key={number} className="etapas__step">
+              <div className="etapas__icon">
                 <Icon size={28} strokeWidth={1.3} />
               </div>
-              <span className="ritual__number">{number}</span>
+              <span className="etapas__number">{number}</span>
               <h3>{title}</h3>
               <p>{desc}</p>
             </div>
@@ -51,13 +51,13 @@ export default function Steps() {
       </div>
 
       <style>{`
-        .ritual {
+        .etapas {
           position: relative;
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 32px;
         }
-        .ritual::before {
+        .etapas::before {
           content: '';
           position: absolute;
           top: 44px;
@@ -66,11 +66,11 @@ export default function Steps() {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(232, 194, 103, 0.5), rgba(240, 64, 158, 0.5), rgba(232, 194, 103, 0.5), transparent);
         }
-        .ritual__step {
+        .etapas__step {
           position: relative;
           text-align: center;
         }
-        .ritual__icon {
+        .etapas__icon {
           width: 88px;
           height: 88px;
           margin: 0 auto 24px;
@@ -84,11 +84,11 @@ export default function Steps() {
           box-shadow: 0 0 28px rgba(232, 194, 103, 0.18), inset 0 0 20px rgba(166, 75, 223, 0.25);
           transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
-        .ritual__step:hover .ritual__icon {
+        .etapas__step:hover .etapas__icon {
           transform: translateY(-4px);
           box-shadow: 0 0 40px rgba(232, 194, 103, 0.35), inset 0 0 20px rgba(166, 75, 223, 0.35);
         }
-        .ritual__number {
+        .etapas__number {
           display: block;
           font-family: var(--serif);
           font-size: 13px;
@@ -96,12 +96,12 @@ export default function Steps() {
           color: var(--magenta);
           margin-bottom: 8px;
         }
-        .ritual__step h3 {
+        .etapas__step h3 {
           font-size: 24px;
           font-weight: 600;
           margin-bottom: 12px;
         }
-        .ritual__step p {
+        .etapas__step p {
           font-size: 14px;
           color: var(--text-muted);
           max-width: 240px;
@@ -109,11 +109,11 @@ export default function Steps() {
         }
 
         @media (max-width: 860px) {
-          .ritual { grid-template-columns: 1fr 1fr; row-gap: 56px; }
-          .ritual::before { display: none; }
+          .etapas { grid-template-columns: 1fr 1fr; row-gap: 56px; }
+          .etapas::before { display: none; }
         }
         @media (max-width: 480px) {
-          .ritual { grid-template-columns: 1fr; }
+          .etapas { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>

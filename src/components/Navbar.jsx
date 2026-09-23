@@ -5,7 +5,7 @@ import { PHONE, PHONE_LABEL, INSTAGRAM_URL, whatsapp } from '../contact'
 
 const LINKS = [
   { label: 'O Espaço', href: '#espaco'   },
-  { label: 'Ritual',   href: '#ritual'   },
+  { label: 'Etapas',   href: '#etapas'   },
   { label: 'Serviços', href: '#servicos' },
   { label: 'Contato',  href: '#contato'  },
 ]
