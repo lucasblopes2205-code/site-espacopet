@@ -1,11 +1,12 @@
 // Menu do assistente do site. Cada tela tem um texto e opções.
 // Uma opção leva a outra tela (`next`) e pode guardar uma resposta (`set`).
 // A tela final (`final`) monta a mensagem que será enviada para o WhatsApp.
+// `next` também pode ser uma função das respostas, para caminhos que compartilham telas.
 
 const RACAS = [
   'Shih-tzu', 'Lhasa Apso', 'Yorkshire', 'Maltês', 'Poodle', 'Spitz Alemão',
   'Pinscher', 'Dachshund', 'Bulldog Francês', 'Pug', 'Golden Retriever', 'Labrador',
-  'Border Collie', 'Gato',
+  'Border Collie',
 ]
 
 const PORTE = [
@@ -47,23 +48,13 @@ export const FLOWS = {
   inicio: {
     text: 'Olá! Eu sou a Mel, assistente do Espaço Pet da Mel. 🐾 Como posso te ajudar?',
     options: [
-      { label: '✨ Conhecer as experiências de banho', next: 'banhos' },
-      { label: '✂️ Agendar tosa', next: 'tosa' },
-      { label: '🎁 Planos e pacotes', next: 'planos' },
+      { label: '🛁 Agendar banho', set: { tipo: 'agendamento', servico: 'Banho' }, next: 'raca' },
+      { label: '✂️ Agendar tosa', set: { tipo: 'agendamento' }, next: 'tosa' },
+      { label: '🎁 Planos e pacotes', set: { tipo: 'plano', servico: 'Planos e pacotes' }, next: 'raca' },
       { label: '📅 Remarcar ou cancelar', next: 'remarcar' },
       { label: '📍 Horários e endereço', next: 'info' },
       { label: '💜 Deixar um feedback', next: 'feedback' },
       { label: '💬 Falar com a equipe', next: 'equipe' },
-    ],
-  },
-
-  // ---------- Banhos ----------
-  banhos: {
-    text: 'Qual experiência de banho você deseja para o seu pet?',
-    options: [
-      { label: 'Banho Clássico',  set: { servico: 'Banho Clássico' },  next: 'raca' },
-      { label: 'Banho Signature', set: { servico: 'Banho Signature' }, next: 'raca' },
-      { label: 'Spa Day',         set: { servico: 'Spa Day' },         next: 'raca' },
     ],
   },
 
@@ -81,17 +72,20 @@ export const FLOWS = {
 
   // ---------- Etapas comuns de agendamento ----------
   raca: {
-    text: 'Qual é a raça do seu pet?',
+    text: (a) => a.tipo === 'plano'
+      ? 'Temos condições especiais para quem cuida do pet com frequência. Para indicarmos o melhor plano, qual é a raça do seu pet?'
+      : 'Qual é a raça do seu pet?',
     layout: 'grid',
     options: [
-      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: 'cidade' })),
+      // Nos planos o porte é sempre perguntado; no agendamento, só para SRD e Outra
+      ...RACAS.map((r) => ({ label: r, set: { raca: r, porte: '' }, next: (a) => (a.tipo === 'plano' ? 'porte' : 'cidade') })),
       { label: 'SRD (sem raça definida)', set: { raca: 'SRD (sem raça definida)' }, next: 'porte' },
       { label: 'Outra', set: { raca: 'Outra' }, next: 'porte' },
     ],
   },
   porte: {
     text: 'E qual é o porte dele(a)?',
-    options: withNext(PORTE, 'cidade'),
+    options: withNext(PORTE, (a) => (a.tipo === 'plano' ? 'planos_fim' : 'cidade')),
   },
   cidade: {
     text: 'Em qual cidade você prefere o atendimento?',
@@ -108,18 +102,17 @@ export const FLOWS = {
   },
 
   // ---------- Planos ----------
-  planos: {
-    text: 'Temos condições especiais para quem cuida do pet com frequência. Qual serviço te interessa?',
-    options: [
-      { label: 'Pacote de banhos', set: { plano: 'pacote de banhos' }, next: 'planos_fim' },
-      { label: 'Pacote de tosas',  set: { plano: 'pacote de tosas' },  next: 'planos_fim' },
-      { label: 'Plano para filhote', set: { plano: 'plano para filhote' }, next: 'planos_fim' },
-      { label: 'Quero conhecer todos', set: { plano: 'planos e pacotes disponíveis' }, next: 'planos_fim' },
-    ],
-  },
   planos_fim: {
-    text: 'Ótimo! Nossa equipe te apresenta as opções e condições pelo WhatsApp.',
-    final: (a) => `Olá! Vim pelo site e gostaria de conhecer as condições do ${a.plano}. 🐾`,
+    text: 'Perfeito! Nossa equipe te apresenta os planos e condições ideais para o seu pet pelo WhatsApp. 💜',
+    summary: true,
+    final: (a) => [
+      'Olá! Vim pelo site e gostaria de conhecer os planos e pacotes 🐾',
+      '',
+      `• Raça: ${a.raca}`,
+      `• Porte: ${a.porte}`,
+      '',
+      'Nome do pet: ',
+    ].join('\n'),
   },
 
   // ---------- Remarcar / cancelar ----------
@@ -151,8 +144,8 @@ export const FLOWS = {
   agendar_menu: {
     text: 'O que vamos agendar?',
     options: [
-      { label: 'Banho', next: 'banhos' },
-      { label: 'Tosa',  next: 'tosa' },
+      { label: 'Banho', set: { tipo: 'agendamento', servico: 'Banho' }, next: 'raca' },
+      { label: 'Tosa',  set: { tipo: 'agendamento' }, next: 'tosa' },
     ],
   },
   busca: {

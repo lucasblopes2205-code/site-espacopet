@@ -72,13 +72,15 @@ export default function ChatAssistant() {
     }))
     setTyping(true)
 
+    const nextNode = resolve(option.next, nextAnswers)
+
     setTimeout(() => {
       setTyping(false)
       setState((s) => ({
         ...s,
-        node: option.next,
+        node: nextNode,
         answers: nextAnswers,
-        log: [...s.log, botMessage(option.next, nextAnswers)],
+        log: [...s.log, botMessage(nextNode, nextAnswers)],
       }))
     }, 500)
   }
@@ -451,7 +453,7 @@ export default function ChatAssistant() {
           font-size: 13px;
         }
         .chat__options--grid .chat__option:hover { transform: none; }
-        .chat__options--grid .chat__option:nth-last-child(-n+2) {
+        .chat__options--grid .chat__option:last-child {
           grid-column: 1 / -1;
         }
         .chat__option:hover {
